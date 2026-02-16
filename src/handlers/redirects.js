@@ -30,6 +30,7 @@ const REDIRECTS = new Map([
     ["/go", "/links"],
     ["/link", "/links"],
     ["/mutual_links", "/links"],
+    ["/terms/ui", "/terms"],
 ]);
 
 export function handleRedirects(request, normalizedPath) {
