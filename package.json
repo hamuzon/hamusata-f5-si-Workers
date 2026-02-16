@@ -1,0 +1,24 @@
+{
+  "name": "hamusata-f5-si-workers",
+  "version": "1.0.0",
+  "description": "hamusata の個人サイトです。  \r This is the personal website of hamusata.",
+  "main": "index.js",
+  "devDependencies": {
+    "wrangler": "^4.65.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hamuzon/hamusata-f5-si-Workers.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hamuzon/hamusata-f5-si-Workers/issues"
+  },
+  "homepage": "https://github.com/hamuzon/hamusata-f5-si-Workers#readme"
+}
