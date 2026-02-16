@@ -6,8 +6,6 @@ export async function handleError404(request) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 Not Found / ページが見つかりません</title>
 
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="icon" href="icon.webp" type="image/webp">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="icon" href="/icon.webp" type="image/webp">
 
@@ -124,6 +122,7 @@ export async function handleError404(request) {
       border-radius: 14px;
       border: 1px solid rgba(0,0,0,0.2);
       background: rgba(255,255,255,0.15);
+      -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
       cursor: pointer;
       z-index: 1001;

@@ -16,17 +16,17 @@ export async function handleSub(request) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/mobile-menu.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/mobile-menu.css">
 
 <script>
   const themeCSS = [
-    "css/dark.css",
-    "css/dark-hc.css",
-    "css/dark-mc.css",
-    "css/light.css",
-    "css/light-hc.css",
-    "css/light-mc.css"
+    "/css/dark.css",
+    "/css/dark-hc.css",
+    "/css/dark-mc.css",
+    "/css/light.css",
+    "/css/light-hc.css",
+    "/css/light-mc.css"
   ];
   themeCSS.forEach(href => document.write(\`<link rel="stylesheet" href="\${href}">\`));
 </script>
@@ -53,6 +53,7 @@ export async function handleSub(request) {
     border-radius: 12px;
     border: 1px solid rgba(0,0,0,0.2);
     background: rgba(255,255,255,0.15);
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     cursor: pointer;
     z-index: 1001;
@@ -79,7 +80,7 @@ export async function handleSub(request) {
 
 <header>
   <a href="/" id="home" class="banner-link">
-    <img src="hamusata_399-120.webp" alt="hamusata home banner" width="399" height="120" loading="lazy" decoding="async">
+    <img src="/hamusata_399-120.webp" alt="hamusata home banner" width="399" height="120" loading="lazy" decoding="async">
   </a>
 
   <button id="menu-toggle" aria-label="メニューを開く" aria-expanded="false">
@@ -147,9 +148,9 @@ export async function handleSub(request) {
   &copy; <span id="year"></span> <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – <span data-lang="footer_reserved">All rights reserved.</span>
 </footer>
 
-<script src="js/script-sub.js"></script>
-<script src="js/links-sub.js"></script>
-<script src="js/lang-switch-sub.js"></script>
+<script src="/js/script-sub.js"></script>
+<script src="/js/links-sub.js"></script>
+<script src="/js/lang-switch-sub.js"></script>
 
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();

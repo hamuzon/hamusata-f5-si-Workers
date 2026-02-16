@@ -18,17 +18,17 @@ export async function handleHome(request) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/mobile-menu.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/mobile-menu.css" />
 
   <script>
     const themeCSS = [
-      "css/dark.css",
-      "css/dark-hc.css",
-      "css/dark-mc.css",
-      "css/light.css",
-      "css/light-hc.css",
-      "css/light-mc.css"
+      "/css/dark.css",
+      "/css/dark-hc.css",
+      "/css/dark-mc.css",
+      "/css/light.css",
+      "/css/light-hc.css",
+      "/css/light-mc.css"
     ];
     themeCSS.forEach(href => document.write(\`<link rel="stylesheet" href="\${href}">\`));
   </script>
@@ -55,6 +55,7 @@ export async function handleHome(request) {
       border-radius: 12px;
       border: 1px solid rgba(0,0,0,0.2);
       background: rgba(255,255,255,0.15);
+      -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
       cursor: pointer;
       z-index: 1001;
@@ -78,7 +79,7 @@ export async function handleHome(request) {
 
   <header>
     <a href="/" id="home" class="banner-link" aria-label="HAMUSATA ホームへ移動">
-      <img src="hamusata_399-120.webp" alt="hamusata home banner" width="399" height="120" loading="lazy" decoding="async">
+      <img src="/hamusata_399-120.webp" alt="hamusata home banner" width="399" height="120" loading="lazy" decoding="async">
     </a>
 
     <button id="menu-toggle" aria-label="メニューを開く">
@@ -197,7 +198,7 @@ export async function handleHome(request) {
         <img src="/icon.webp" alt="ランダム作品 icon" loading="lazy" decoding="async">
         <h3 data-lang="random_card_title">ランダム作品</h3>
         <p data-lang="random_card_desc">作品をランダムに開くボタンです。</p>
-        <a href="./random/" data-lang="link_open">開く</a>
+        <a href="/random" data-lang="link_open">開く</a>
       </div>
     </div>
   </section>
@@ -221,7 +222,7 @@ export async function handleHome(request) {
         <img src="/icon.webp" alt="Mutual Links icon" loading="lazy" decoding="async">
         <h3 data-lang="mutual_card_title">相互リンクページ</h3>
         <p data-lang="mutual_card_desc">こちらをクリックすると相互リンクページに移動します。</p>
-        <a href="./links/" data-lang="link_open">開く</a>
+        <a href="/links" data-lang="link_open">開く</a>
       </div>
     </div>
   </section>
@@ -272,8 +273,8 @@ export async function handleHome(request) {
     &copy; <span id="year"></span> <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – <span data-lang="footer_reserved">All rights reserved.</span><br>
   </footer>
 
-  <script src="js/script.js"></script>
-  <script src="js/lang-switch.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/lang-switch.js"></script>
 
   <script>
     if ('serviceWorker' in navigator) {

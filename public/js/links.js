@@ -100,6 +100,9 @@ document.addEventListener("DOMContentLoaded", loadLinks);
 
   const links = document.querySelectorAll('a[href]');
   links.forEach(link => {
+    // SNSセクション内のリンクは除外
+    if (link.closest('#sns')) return;
+
     const url = new URL(link.href, window.location.origin);
 
     // 外部リンクを除外

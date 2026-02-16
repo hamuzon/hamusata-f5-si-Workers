@@ -5,7 +5,7 @@
 async function loadSubLang(lang) {
   try {
     // sub-lang.json を取得
-    const res = await fetch("lang/sub-lang.json");
+    const res = await fetch("/lang/sub-lang.json");
     const data = await res.json();
     const text = data[lang] || data["ja"];
 

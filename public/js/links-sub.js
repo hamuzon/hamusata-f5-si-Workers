@@ -44,7 +44,7 @@ async function loadLinks() {
                    month >= 9 && month <= 11 ? "autumn" : "winter";
 
     // JSONのlangキー取得
-    const langDataRes = await fetch("lang/sub-lang.json");
+    const langDataRes = await fetch("/lang/sub-lang.json");
     const langData = await langDataRes.json();
     const lang = localStorage.getItem("lang") || (navigator.language.startsWith("en") ? "en" : "ja");
 

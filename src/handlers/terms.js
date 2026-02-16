@@ -12,7 +12,7 @@ export async function handleTerms(request) {
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <link rel="apple-touch-icon" href="/icon.png">
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 
 <style>
   :root { --terms-timestamp: 1771218000; /* 指定日 */ }
@@ -28,6 +28,7 @@ export async function handleTerms(request) {
     border-radius: 12px;
     border: 1px solid rgba(0,0,0,0.2);
     background: rgba(255,255,255,0.15);
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     cursor: pointer;
     z-index: 1001;
@@ -70,7 +71,7 @@ export async function handleTerms(request) {
 
   <header>
     <a href="/" id="home" class="banner-link" aria-label="HAMUSATA ホームへ移動">
-      <img src="hamusata_399-120.webp" alt="hamusata home banner" width="399" height="120" loading="lazy" decoding="async">
+      <img src="/hamusata_399-120.webp" alt="hamusata home banner" width="399" height="120" loading="lazy" decoding="async">
     </a>
     <button id="lang-switch" aria-label="言語切り替え / Language switch">🌐 English</button>
   </header>
