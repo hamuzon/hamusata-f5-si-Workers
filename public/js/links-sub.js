@@ -87,7 +87,9 @@ async function loadLinks() {
       // リンク
       if (link) {
         const a = document.createElement("a");
-        const isInternal = ["on", "1", "true"].includes(String(internalLinkFlag).toLowerCase());
+        const isInternalFlag = ["on", "1", "true"].includes(String(internalLinkFlag).toLowerCase());
+        // SNSセクションは常に外部リンク扱い（クエリ引き継ぎ対象外）
+        const isInternal = isInternalFlag && section !== "sns";
 
         if (isInternal) {
           const currentParams = new URLSearchParams(window.location.search);
