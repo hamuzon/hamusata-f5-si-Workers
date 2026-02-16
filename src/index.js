@@ -39,13 +39,17 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
-    // Normalize trailing slash (except root)
-    if (pathname.length > 1 && pathname.endsWith('/')) pathname = pathname.slice(0, -1);
+    // Normalize trailing slash (except root) and redirect to canonical path.
+    if (pathname.length > 1 && pathname.endsWith('/')) {
+      pathname = pathname.slice(0, -1);
+      url.pathname = pathname;
+      return Response.redirect(url.toString(), 301);
+    }
     if (pathname === '') pathname = '/';
 
     // Canonicalize malformed child paths for single-page routes.
-    // e.g. /terms/ui, /sub/ui, /countdown/ui, /404/ui -> base route
-    const singlePageRoutes = new Set(['/sub', '/terms', '/countdown', '/404']);
+    // e.g. /sub/ui, /countdown/ui, /404/ui -> base route
+    const singlePageRoutes = new Set(['/sub', '/countdown', '/404']);
     const firstSegment = `/${pathname.split('/').filter(Boolean)[0] || ''}`;
     if (singlePageRoutes.has(firstSegment) && pathname !== firstSegment) {
       url.pathname = firstSegment;
