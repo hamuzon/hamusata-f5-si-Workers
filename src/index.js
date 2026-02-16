@@ -39,8 +39,12 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
-    // Normalize trailing slash (except root)
-    if (pathname.length > 1 && pathname.endsWith('/')) pathname = pathname.slice(0, -1);
+    // Normalize trailing slash (except root) and redirect to canonical path.
+    if (pathname.length > 1 && pathname.endsWith('/')) {
+      pathname = pathname.slice(0, -1);
+      url.pathname = pathname;
+      return Response.redirect(url.toString(), 301);
+    }
     if (pathname === '') pathname = '/';
 
     // Canonicalize malformed child paths for single-page routes.

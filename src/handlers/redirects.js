@@ -34,7 +34,11 @@ const REDIRECTS = new Map([
 ]);
 
 export function handleRedirects(request, normalizedPath) {
-    const target = REDIRECTS.get(normalizedPath);
+    const path = String(normalizedPath || '').toLowerCase();
+    const trimmed = path.replace(/^\/+|\/+$/g, '');
+    const lookupPath = trimmed ? `/${trimmed}` : '/';
+
+    const target = REDIRECTS.get(lookupPath);
     if (target) {
         return Response.redirect(new URL(target, request.url).toString(), 301);
     }
