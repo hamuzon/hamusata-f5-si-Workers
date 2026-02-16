@@ -1,17 +1,16 @@
-const CACHE_NAME = 'hamusata-v10.02.00';
+const CACHE_NAME = 'hamusata-v10.03.00';
 
 const urlsToCache = [
   '/',
-  '/404.html',
+  '/404',
   '/BingSiteAuth.xml',
   '/LICENSE',
   '/README.md',
   '/favicon.ico',
-  '/index.html',
   '/logo.webp',
   '/manifest.json',
-  '/sub.html',
-  '/terms.html',
+  '/sub',
+  '/terms',
 
   '/banner_icon_hamusata.png',
   '/banner_icon_hamusata.webp',
@@ -97,36 +96,42 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-
   if (event.request.method !== 'GET') return;
 
-  event.respondWith(
-    fetch(event.request)
-      .then(networkResponse => {
-        if (!networkResponse || networkResponse.status !== 200) {
+  // HTML (Navigation) -> Network First
+  // 画像やCSSなど (Assets) -> Cache First
+  const isNavigation = event.request.mode === 'navigate' || event.request.destination === 'document';
+
+  if (isNavigation) {
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResponse => {
+          if (!networkResponse || networkResponse.status !== 200) return networkResponse;
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache));
           return networkResponse;
-        }
-
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then(cache => {
-          try {
-            cache.put(event.request, responseToCache);
-          } catch (e) {
-            console.warn('[ServiceWorker] cache.put failed:', event.request.url, e);
-          }
-        });
-        return networkResponse;
+        })
+        .catch(() => {
+          return caches.match(event.request).then(cachedResponse => {
+            return cachedResponse || caches.match('/404');
+          });
+        })
+    );
+  } else {
+    event.respondWith(
+      caches.match(event.request).then(cachedResponse => {
+        if (cachedResponse) return cachedResponse;
+        return fetch(event.request)
+          .then(networkResponse => {
+            if (!networkResponse || networkResponse.status !== 200) return networkResponse;
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache));
+            return networkResponse;
+          })
+          .catch(() => {
+            if (event.request.destination === 'image') return caches.match('/icon.webp');
+          });
       })
-      .catch(() => {
-        return caches.match(event.request).then(cachedResponse => {
-          if (cachedResponse) return cachedResponse;
-
-          if (event.request.destination === 'image') {
-            return caches.match('/icon.webp');
-          } else if (event.request.destination === 'document') {
-            return caches.match('/');
-          }
-        });
-      })
-  );
+    );
+  }
 });

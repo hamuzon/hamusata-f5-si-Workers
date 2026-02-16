@@ -1,4 +1,4 @@
-export function handleError404(request) {
+export async function handleError404(request) {
     const html = `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -11,6 +11,9 @@ export function handleError404(request) {
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="icon" href="/icon.webp" type="image/webp">
 
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2a9d8f">
+
   <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
 
   <style>
@@ -19,6 +22,7 @@ export function handleError404(request) {
       padding: 0;
       box-sizing: border-box;
       font-family: 'Potta One', 'Arial', 'Helvetica', sans-serif;
+      overflow-wrap: break-word;
     }
 
     body {
@@ -239,11 +243,30 @@ export function handleError404(request) {
     document.addEventListener("DOMContentLoaded", initLang);
   </script>
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+  </script>
+
 </body>
 </html>`;
 
+    // ETag生成と304応答の処理
+    const encoder = new TextEncoder();
+    const data = encoder.encode(html);
+    const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const etag = `"${hashArray.map(b => b.toString(16).padStart(2, '0')).join('')}"`;
+
+    if (request.headers.get('If-None-Match') === etag) {
+        return new Response(null, { status: 304, headers: { "ETag": etag, "Cache-Control": "public, max-age=3600" } });
+    }
+
     return new Response(html, {
         status: 404,
-        headers: { "Content-Type": "text/html; charset=UTF-8" },
+        headers: { "Content-Type": "text/html; charset=UTF-8", "ETag": etag, "Cache-Control": "public, max-age=3600" },
     });
 }

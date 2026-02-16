@@ -33,10 +33,12 @@ export async function handleCountdown(request) {
 <meta property="og:description" content="来年の元旦までの残り時間をリアルタイムでカウントダウン！">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2a9d8f">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans JP', 'Arial', sans-serif; }
-    body { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; line-height: 1.4; overflow-x: hidden; font-weight: 500; transition: background-color 0.3s, color 0.3s; font-size: clamp(0.9rem, 1.5vw, 1.1rem); background-attachment: fixed; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans JP', 'Arial', sans-serif; overflow-wrap: break-word; }
+    body { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; line-height: 1.4; overflow-x: hidden; font-weight: 500; transition: background-color 0.3s, color 0.3s; font-size: clamp(0.9rem, 1.5vw, 1.1rem); background-attachment: fixed; width: 100%; }
     .light body { background: radial-gradient(ellipse 80% 60% at 70% 20%, rgba(175, 109, 255, 0.85), transparent 68%), radial-gradient(ellipse 70% 60% at 20% 80%, rgba(255, 100, 180, 0.75), transparent 68%), radial-gradient(ellipse 60% 50% at 60% 65%, rgba(255, 235, 170, 0.98), transparent 68%), radial-gradient(ellipse 65% 40% at 50% 60%, rgba(120, 190, 255, 0.3), transparent 68%), linear-gradient(180deg, #f7eaff 0%, #fde2ea 100%); color: #333; }
     .dark body { background-color: #0a0a0a; background-image: radial-gradient(ellipse at 20% 30%, rgba(56, 189, 248, 0.4) 0%, transparent 60%), radial-gradient(ellipse at 80% 70%, rgba(139, 92, 246, 0.3) 0%, transparent 70%), radial-gradient(ellipse at 60% 20%, rgba(236, 72, 153, 0.25) 0%, transparent 50%), radial-gradient(ellipse at 40% 80%, rgba(34, 197, 94, 0.2) 0%, transparent 65%); color: #fff; }
     header { position: fixed; top: 0; width: 100%; padding: 1rem 0; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); z-index: 10; }
@@ -133,10 +135,28 @@ export async function handleCountdown(request) {
         updateCountdown();
         updateNowTime();
     </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script>
 </body>
 </html>`;
 
+    // ETag生成と304応答の処理
+    const encoder = new TextEncoder();
+    const data = encoder.encode(html);
+    const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const etag = `"${hashArray.map(b => b.toString(16).padStart(2, '0')).join('')}"`;
+
+    if (request.headers.get('If-None-Match') === etag) {
+        return new Response(null, { status: 304, headers: { "ETag": etag, "Cache-Control": "public, max-age=3600" } });
+    }
+
     return new Response(html, {
-        headers: { "content-type": "text/html;charset=UTF-8" },
+        headers: { "content-type": "text/html;charset=UTF-8", "ETag": etag, "Cache-Control": "public, max-age=3600" },
     });
 }

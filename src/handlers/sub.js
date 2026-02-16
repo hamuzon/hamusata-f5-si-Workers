@@ -1,4 +1,4 @@
-export function handleSub(request) {
+export async function handleSub(request) {
   const html = `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -6,21 +6,19 @@ export function handleSub(request) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-lang="page_title">HAMUSATA – ホームページ</title>
 
-<!-- Favicon -->
 <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icon.png">
 
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2a9d8f">
 
-<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
 
-<!-- CSS -->
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/mobile-menu.css">
 
-<!-- テーマCSS -->
 <script>
   const themeCSS = [
     "css/dark.css",
@@ -33,7 +31,6 @@ export function handleSub(request) {
   themeCSS.forEach(href => document.write(\`<link rel="stylesheet" href="\${href}">\`));
 </script>
 
-<!-- SEO -->
 <meta name="description" content="HAMUSATA.f5.si のホームページです / This is the homepage of HAMUSATA.f5.si">
 <meta property="og:title" content="HAMUSATA – ホームページ">
 <meta property="og:description" content="HAMUSATA.f5.si のホームページです / This is the homepage of HAMUSATA.f5.si">
@@ -45,8 +42,8 @@ export function handleSub(request) {
 <meta name="twitter:description" content="HAMUSATA.f5.si のホームページです / This is the homepage of HAMUSATA.f5.si">
 <meta name="twitter:image" content="/icon_500_500.webp">
 
-<!-- 言語切替ボタンスタイル -->
 <style>
+  * { box-sizing: border-box; overflow-wrap: break-word; }
   #lang-switch {
     position: fixed;
     top: 16px;
@@ -78,10 +75,8 @@ export function handleSub(request) {
 </head>
 <body class="light">
 
-<!-- Language switch button -->
 <button id="lang-switch">🌐 English</button>
 
-<!-- ヘッダー -->
 <header>
   <a href="/" id="home" class="banner-link">
     <img src="hamusata_399-120.webp" alt="hamusata home banner" width="399" height="120" loading="lazy" decoding="async">
@@ -152,20 +147,37 @@ export function handleSub(request) {
   &copy; <span id="year"></span> <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – <span data-lang="footer_reserved">All rights reserved.</span>
 </footer>
 
-<!-- JS -->
 <script src="js/script-sub.js"></script>
 <script src="js/links-sub.js"></script>
 <script src="js/lang-switch-sub.js"></script>
 
-<!-- 年表示 -->
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js');
+    });
+  }
 </script>
 
 </body>
 </html>`;
 
+  // ETag生成と304応答の処理
+  const encoder = new TextEncoder();
+  const data = encoder.encode(html);
+  const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const etag = `"${hashArray.map(b => b.toString(16).padStart(2, '0')).join('')}"`;
+
+  if (request.headers.get('If-None-Match') === etag) {
+    return new Response(null, { status: 304, headers: { "ETag": etag, "Cache-Control": "public, max-age=3600" } });
+  }
+
   return new Response(html, {
-    headers: { "Content-Type": "text/html; charset=UTF-8" },
+    headers: { "Content-Type": "text/html; charset=UTF-8", "ETag": etag, "Cache-Control": "public, max-age=3600" },
   });
 }

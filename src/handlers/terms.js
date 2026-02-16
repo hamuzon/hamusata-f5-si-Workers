@@ -1,4 +1,4 @@
-export function handleTerms(request) {
+export async function handleTerms(request) {
   const html = `<!DOCTYPE html>
 <html lang="ja-en">
 <head>
@@ -6,21 +6,19 @@ export function handleTerms(request) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>利用規約・プライバシーポリシー / Terms of Service & Privacy Policy – HAMUSATA</title>
 
-  <!-- Favicon -->
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" type="image/png" href="/icon.png" sizes="32x32">
   <link rel="icon" type="image/webp" href="/icon.webp" sizes="32x32">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <link rel="apple-touch-icon" href="/icon.png">
 
-  <!-- 共通CSS -->
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- テーマCSS -->
 <style>
-  :root { --terms-timestamp: 1763880300; /* 指定日 */ }
+  :root { --terms-timestamp: 1771218000; /* 指定日 */ }
+  * { box-sizing: border-box; overflow-wrap: break-word; }
+  a { overflow-wrap: anywhere; word-break: break-word; }
 
-  /* 言語切替ボタン 固定 */
   #lang-switch {
     position: fixed;
     top: 16px;
@@ -45,7 +43,6 @@ export function handleTerms(request) {
     transform: scale(1.05);
   }
 
-  /* 言語切替表示 */
   .lang-ja .en { display: none; }
   .lang-en .ja { display: none; }
 
@@ -53,6 +50,18 @@ export function handleTerms(request) {
     position: relative;
     text-align: center;
   }
+
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    overflow-wrap: break-word;
+  }
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+  img { max-width: 100%; height: auto; }
 </style>
 
 
@@ -107,36 +116,59 @@ export function handleTerms(request) {
       <h2><span class="ja">4. 著作権</span><span class="en">4. Copyright</span></h2>
       <p class="ja">当サイト内のコンテンツ（文章・画像・プログラムなど）の著作権は当サイト運営者または各権利者に帰属します。無断使用・転載は禁止します。</p>
       <p class="en">All content on this Site, including text, images, and programs, is the property of the Site’s operator or respective copyright holders. Unauthorized use or reproduction is strictly prohibited.</p>
+      <div style="margin-top: 1rem; font-size: 0.9em; opacity: 0.8;">
+        <p class="ja">※一応の対応として、GitHub等で公開されているコードや特定のコンテンツについては<br> <P><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja" target="_blank" rel="noopener">クリエイティブ・コモンズ (CC BY-NC-SA 4.0)</a> を適用します。</p></p>
+        <p class="en">*As a tentative measure, code published on GitHub and specific content are subject to <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">Creative Commons (CC BY-NC-SA 4.0)</a>.</p>
+      </div>
 
       <h2><span class="ja">5. クッキー・アクセス解析</span><span class="en">5. Cookies & Analytics</span></h2>
       <p class="ja">当サイトでは、サービス向上のためアクセス解析（Google Analytics 等）を利用する場合があります。収集されるデータは匿名化されており、個人を特定する情報は含まれません。</p>
       <p class="en">The Site may use analytics tools (such as Google Analytics) to improve user experience. Collected data is anonymized and does not contain personally identifiable information.</p>
 
       <h2><span class="ja">6. プライバシーポリシー</span><span class="en">6. Privacy Policy</span></h2>
-      <p class="ja">当サイトでは、ユーザーの個人情報（名前・メールアドレス等）は一切取得していません。アクセス解析やクッキー等を使用する場合がありますが、収集されるデータは匿名化されており、個人を特定する情報は含まれません。</p>
-      <p class="en">This Site does not collect any personal information from users (such as name or email address). The Site may use analytics or cookies, but any collected data is anonymized and does not contain personally identifiable information.</p>
+      <p class="ja">当サイトでは、原則としてユーザーの個人情報（名前・メールアドレス等）は取得しません。</p>
+      <p class="en">In principle, this Site does not collect personal information (such as names or email addresses).</p>
 
+      <h3 style="margin-top:1.5rem; font-size:1.1rem;"><span class="ja">ログ情報の保存について</span><span class="en">Log Data Retention</span></h3>
       <p class="ja">
-        当サイトは Cloudflare Pages を利用しています。詳細は
-        <a href="https://www.cloudflare.com/ja-jp/terms/" target="_blank" rel="noopener">Cloudflare 利用規約</a>および
-        <a href="https://www.cloudflare.com/ja-jp/privacypolicy/" target="_blank" rel="noopener">Cloudflare プライバシーポリシー</a>をご覧ください。
+        URL短縮サービス（<a href="https://link-s.f5.si" target="_blank" rel="noopener">link-s.f5.si</a> 等）や一部の機能においては、不正利用の防止やトラブル対応（スパム、フィッシング詐欺対策等）のため、アクセスログ（IPアドレス、User Agent、アクセス日時等）を記録・保存します。<br>
+        これらの情報は、法的機関からの要請があった場合や、当サイトの権利・財産を保護するために必要と判断される場合を除き、第三者に提供することはありません。
       </p>
       <p class="en">
-        This Site is hosted via Cloudflare Pages. For details, see the
-        <a href="https://www.cloudflare.com/ja-jp/terms/" target="_blank" rel="noopener">Cloudflare Terms of Service</a> and
-        <a href="https://www.cloudflare.com/ja-jp/privacypolicy/" target="_blank" rel="noopener">Cloudflare Privacy Policy</a>.
+        For URL shortening services (e.g., <a href="https://link-s.f5.si" target="_blank" rel="noopener">link-s.f5.si</a>) and certain features, we record and retain access logs (IP address, User Agent, timestamp, etc.) to prevent abuse and handle troubleshooting (e.g., anti-spam, anti-phishing measures).<br>
+        This information will not be disclosed to third parties unless required by law or deemed necessary to protect the rights and property of the Site.
       </p>
 
+      <h3 style="margin-top:1.5rem; font-size:1.1rem;"><span class="ja">外部ツール・アクセス解析</span><span class="en">Third-Party Tools & Analytics</span></h3>
+      <div class="ja">
+        <p>当サイトは Cloudflare Pages を利用しています。</p>
+        <p>詳細は <a href="https://www.cloudflare.com/ja-jp/terms/" target="_blank" rel="noopener">Cloudflare 利用規約</a> および <a href="https://www.cloudflare.com/ja-jp/privacypolicy/" target="_blank" rel="noopener">Cloudflare プライバシーポリシー</a> をご覧ください。</p>
+      </div>
+      <div class="en">
+        <p>This Site is hosted via Cloudflare Pages.</p>
+        <p>For details, see the <a href="https://www.cloudflare.com/ja-jp/terms/" target="_blank" rel="noopener">Cloudflare Terms of Service</a> and <a href="https://www.cloudflare.com/ja-jp/privacypolicy/" target="_blank" rel="noopener">Cloudflare Privacy Policy</a>.</p>
+      </div>
+
+      <div class="ja">
+        <p>また、当サイトでは Google Analytics を利用してアクセス解析を行っています。</p>
+        <p>詳細は <a href="https://policies.google.com/" target="_blank" rel="noopener">Google プライバシーと利用規約</a> をご確認ください。</p>
+      </div>
+      <div class="en">
+        <p>This Site uses Google Analytics for anonymized traffic analysis.</p>
+        <p>For details, see <a href="https://policies.google.com/" target="_blank" rel="noopener">Google Privacy & Terms</a>.</p>
+      </div>
+
+      <h2><span class="ja">7. AI学習・スクレイピング</span><span class="en">7. AI Training & Scraping</span></h2>
       <p class="ja">
-        また、当サイトでは Google Analytics を利用してアクセス解析を行っています。詳細は
-        <a href="https://policies.google.com/" target="_blank" rel="noopener">Google プライバシーと利用規約</a>をご確認ください。
+        当サイト内のコンテンツ（テキスト、画像、コード等）を、生成AI（人工知能）等の機械学習モデルの学習データとして利用すること、およびそのための網羅的なデータ収集（スクレイピング、クローリング）を禁止します。<br>
+        ただし、検索エンジンによるインデックス作成や、個人利用の範囲での非公開な解析を除きます。
       </p>
       <p class="en">
-        This Site uses Google Analytics for anonymized traffic analysis. For details, see
-        <a href="https://policies.google.com/" target="_blank" rel="noopener">Google Privacy & Terms</a>.
+        The use of content on this Site (text, images, code, etc.) as training data for machine learning models such as generative AI, and comprehensive data collection (scraping, crawling) for such purposes, is prohibited.<br>
+        Exceptions include indexing by search engines and private analysis for personal use.
       </p>
 
-      <h2><span class="ja">7. 規約の変更</span><span class="en">7. Changes to the Terms</span></h2>
+      <h2><span class="ja">8. 規約の変更</span><span class="en">8. Changes to the Terms</span></h2>
       <p class="ja">当サイトは本規約を予告なく変更することがあります。最新の内容は当ページにてご確認ください。</p>
       <p class="en">The Site may modify these terms without prior notice. Please check this page periodically for the latest version.</p>
 
@@ -145,9 +177,10 @@ export function handleTerms(request) {
 
   <footer>
     &copy; <span id="year"></span>
-    <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – All rights reserved. |
-    <a href="/" class="ja">ホームページに戻る</a>
-    <a href="/" class="en">Back to Home</a>
+    <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – All rights reserved.<br>
+    <div style="margin-top: 0.5rem;">
+      <a href="/">ホームページに戻る / Back to Home</a>
+    </div>
   </footer>
 
   <script>
@@ -208,10 +241,29 @@ export function handleTerms(request) {
     });
   </script>
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+  </script>
+
 </body>
 </html>`;
 
+  // ETag生成と304応答の処理
+  const encoder = new TextEncoder();
+  const data = encoder.encode(html);
+  const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const etag = `"${hashArray.map(b => b.toString(16).padStart(2, '0')).join('')}"`;
+
+  if (request.headers.get('If-None-Match') === etag) {
+    return new Response(null, { status: 304, headers: { "ETag": etag, "Cache-Control": "public, max-age=3600" } });
+  }
+
   return new Response(html, {
-    headers: { "Content-Type": "text/html; charset=UTF-8" },
+    headers: { "Content-Type": "text/html; charset=UTF-8", "ETag": etag, "Cache-Control": "public, max-age=3600" },
   });
 }

@@ -2,7 +2,7 @@
   "name": "HAMUSATA – ホームページ",
   "short_name": "HAMUSATA",
   "description": "HAMUSATA.f5.si のホームページ。ポートフォリオやリンク集、ランダム作品などをまとめたサイト。",
-  "start_url": "/index.html",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",

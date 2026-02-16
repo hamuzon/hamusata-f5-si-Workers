@@ -57,6 +57,16 @@ export default {
     if (pathname === '/countdown') {
       return handleCountdown(request);
     }
+    if (pathname === '/404') {
+      const newHeaders = new Headers(request.headers);
+      newHeaders.delete('If-None-Match'); // 強制的に本文を取得するためETagを削除
+      const newReq = new Request(request, { headers: newHeaders });
+      const res = await handleError404(newReq);
+      return new Response(res.body, {
+        status: 200, // キャッシュ用に200で返す
+        headers: res.headers
+      });
+    }
     if (pathname.startsWith('/r/')) {
       return handleRickRoll(request);
     }

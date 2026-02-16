@@ -1,4 +1,4 @@
-export function handleHome(request) {
+export async function handleHome(request) {
   const html = `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -6,12 +6,14 @@ export function handleHome(request) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-lang="title">HAMUSATA – ホームページ</title>
 
-  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" href="/icon.png" sizes="32x32">
+  <link rel="icon" type="image/webp" href="/icon.webp" sizes="32x32">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icon.png">
 
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#2a9d8f" />
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2a9d8f">
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet" />
@@ -43,6 +45,7 @@ export function handleHome(request) {
   <meta name="twitter:image" content="/icon_500_500.webp" />
 
   <style>
+    * { box-sizing: border-box; overflow-wrap: break-word; }
     #lang-switch {
       position: fixed;
       top: 16px;
@@ -231,51 +234,70 @@ export function handleHome(request) {
         <img src="/icon.webp" alt="Scratch icon" loading="lazy" decoding="async">
         <h3 data-lang="sns_scratch1_title">Scratch</h3>
         <p data-lang="sns_scratch1_desc">hamusataアカウント</p>
-        <a href="https://scratch.mit.edu/users/hamusata/" data-lang="link_view">見る</a>
+        <a href="/s" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
         <img src="/icon.webp" alt="Scratch icon" loading="lazy" decoding="async">
         <h3 data-lang="sns_scratch2_title">Scratch</h3>
         <p data-lang="sns_scratch2_desc">hamuzonアカウント</p>
-        <a href="https://scratch.mit.edu/users/hamuzon/" data-lang="link_view">見る</a>
+        <a href="/s-2" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
         <img src="/icon.webp" alt="GitHub icon" loading="lazy" decoding="async">
         <h3 data-lang="sns_github_title">GitHub</h3>
         <p data-lang="sns_github_desc">GitHubアカウント</p>
-        <a href="https://github.com/hamuzon" data-lang="link_view">見る</a>
+        <a href="/github" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
         <img src="/icon.webp" alt="Bluesky icon" loading="lazy" decoding="async">
         <h3 data-lang="sns_bsky_title">Bluesky</h3>
         <p data-lang="sns_bsky_desc">Blueskyアカウント</p>
-        <a href="https://bsky.app/profile/hamuzon-jp.f5.si" data-lang="link_view">見る</a>
+        <a href="/bluesky" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
         <img src="/icon.webp" alt="Twitter(X) icon" loading="lazy" decoding="async">
         <h3 data-lang="sns_x_title">Twitter (X)</h3>
         <p data-lang="sns_x_desc">@hamu_sata アカウント</p>
-        <a href="https://x.com/hamu_sata" data-lang="link_view">見る</a>
+        <a href="/x" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
     </div>
   </section>
 
   <footer>
-    &copy; <span id="year"></span> <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – <span data-lang="footer_reserved">All rights reserved.</span>
+    &copy; <span id="year"></span> <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – <span data-lang="footer_reserved">All rights reserved.</span><br>
   </footer>
 
   <script src="js/script.js"></script>
   <script src="js/lang-switch.js"></script>
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+  </script>
+
 </body>
 </html>`;
 
+  // ETag生成と304応答の処理
+  const encoder = new TextEncoder();
+  const data = encoder.encode(html);
+  const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const etag = `"${hashArray.map(b => b.toString(16).padStart(2, '0')).join('')}"`;
+
+  if (request.headers.get('If-None-Match') === etag) {
+    return new Response(null, { status: 304, headers: { "ETag": etag, "Cache-Control": "public, max-age=3600" } });
+  }
+
   return new Response(html, {
-    headers: { "Content-Type": "text/html; charset=UTF-8" },
+    headers: { "Content-Type": "text/html; charset=UTF-8", "ETag": etag, "Cache-Control": "public, max-age=3600" },
   });
 }
