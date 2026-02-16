@@ -1,0 +1,171 @@
+export function handleSub(request) {
+  const html = `<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-lang="page_title">HAMUSATA – ホームページ</title>
+
+<!-- Favicon -->
+<link rel="icon" href="https://hamusata.f5.si/favicon.ico" sizes="any">
+  <link rel="icon" href="https://hamusata.f5.si/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="https://hamusata.f5.si/icon.png">
+
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
+
+<!-- CSS -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/mobile-menu.css">
+
+<!-- テーマCSS -->
+<script>
+  const themeCSS = [
+    "css/dark.css",
+    "css/dark-hc.css",
+    "css/dark-mc.css",
+    "css/light.css",
+    "css/light-hc.css",
+    "css/light-mc.css"
+  ];
+  themeCSS.forEach(href => document.write(\`<link rel="stylesheet" href="\${href}">\`));
+</script>
+
+<!-- SEO -->
+<meta name="description" content="HAMUSATA.f5.si のホームページです / This is the homepage of HAMUSATA.f5.si">
+<meta property="og:title" content="HAMUSATA – ホームページ">
+<meta property="og:description" content="HAMUSATA.f5.si のホームページです / This is the homepage of HAMUSATA.f5.si">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hamusata.f5.si">
+<meta property="og:image" content="https://hamusata.f5.si/icon_500_500.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HAMUSATA – ホームページ">
+<meta name="twitter:description" content="HAMUSATA.f5.si のホームページです / This is the homepage of HAMUSATA.f5.si">
+<meta name="twitter:image" content="https://hamusata.f5.si/icon_500_500.webp">
+
+<!-- 言語切替ボタンスタイル -->
+<style>
+  #lang-switch {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.2);
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(16px);
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.18s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    line-height: 1;
+  }
+  body.dark #lang-switch {
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 4px 12px rgba(255,255,255,0.06);
+  }
+  #lang-switch:hover {
+    transform: scale(1.05);
+    background: rgba(0,188,212,0.18);
+  }
+</style>
+
+</head>
+<body class="light">
+
+<!-- Language switch button -->
+<button id="lang-switch">🌐 English</button>
+
+<!-- ヘッダー -->
+<header>
+  <a href="/" id="home" class="banner-link">
+    <img src="hamusata_399-120.webp" alt="hamusata home banner" width="399" height="120" loading="lazy" decoding="async">
+  </a>
+
+  <button id="menu-toggle" aria-label="メニューを開く" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav id="mobile-menu">
+    <ul>
+      <li><a href="#home" data-lang="nav_home">ホーム</a></li>
+      <li><a href="#profile" data-lang="nav_profile">自己紹介</a></li>
+      <li><a href="#portfolio" data-lang="nav_portfolio">ポートフォリオ</a></li>
+      <li><a href="#random" data-lang="nav_random">ランダム作品</a></li>
+      <li><a href="#status" data-lang="nav_status">サービス稼働状況</a></li>
+      <li><a href="#mutual-links" data-lang="nav_links">相互リンク</a></li>
+      <li><a href="#sns" data-lang="nav_sns">SNSリンク</a></li>
+      <li><a href="/terms" data-lang="nav_terms">利用規約・プライバシーポリシー</a></li>
+      <li>
+        <a href="https://github.com/hamuzon/hamusata.f5.si" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:6px;">
+          <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" style="width:20px; height:20px; background-color:#222; border-radius:50%; padding:2px;">
+          <span data-lang="nav_github">site-Code-GitHub</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div id="menu-overlay"></div>
+</header>
+
+<main>
+  <h1 data-lang="page_title">HAMUSATA ホームページ</h1>
+
+  <section id="profile">
+    <h2 data-lang="profile_title">自己紹介</h2>
+    <p data-lang="profile_p1">こんにちは、hamusataです。webサイトを作ったりネットをしてるネットの海の住民。</p>
+    <p data-lang="profile_p2">ハムスターを飼っています。</p>
+    <p data-lang="profile_p3">ネットの海でプログラミングしたりネットしたりして過ごしてます。</p>
+  </section>
+
+  <section id="portfolio">
+    <h2 data-lang="portfolio_title">ポートフォリオリンク集</h2>
+    <div class="works" id="portfolioLinks"></div>
+  </section>
+
+  <section id="random">
+    <h2 data-lang="random_title">ランダム作品</h2>
+    <div class="works" id="randomLinks"></div>
+  </section>
+
+  <section id="status">
+    <h2 data-lang="status_title">サービス稼働状況</h2>
+    <div class="works" id="statusLinks"></div>
+  </section>
+
+  <section id="mutual-links">
+    <h2 data-lang="mutual_title">相互リンク</h2>
+    <div class="works" id="mutualLinks"></div>
+  </section>
+
+  <section id="sns">
+    <h2 data-lang="sns_title">SNSリンク</h2>
+    <div class="works" id="snsLinks"></div>
+  </section>
+</main>
+
+<footer>
+  &copy; <span id="year"></span> <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – <span data-lang="footer_reserved">All rights reserved.</span>
+</footer>
+
+<!-- JS -->
+<script src="js/script-sub.js"></script>
+<script src="js/links-sub.js"></script>
+<script src="js/lang-switch-sub.js"></script>
+
+<!-- 年表示 -->
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>`;
+
+  return new Response(html, {
+    headers: { "Content-Type": "text/html; charset=UTF-8" },
+  });
+}

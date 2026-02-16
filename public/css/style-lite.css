@@ -1,0 +1,239 @@
+/* =========================
+リセット & 基本スタイル
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Potta One', 'Arial', 'Helvetica', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  text-align: center;
+  position: relative;
+  overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+}
+
+body.light {
+  background-color: #f7f0ff;
+  color: #000;
+}
+
+body.dark {
+  background-color: #0a0a0a;
+  color: #fff;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+
+header {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  background: transparent;
+  position: relative;
+  z-index: 10;
+}
+
+.banner-link {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.banner-link img {
+  display: block;
+  width: min(100%, 512px);
+  height: auto;
+  max-height: 120px;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.1);
+  transition: background-color 0.3s;
+}
+
+h1 {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin: 1rem auto;
+  line-height: 1.2;
+}
+
+section {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2rem;
+  border-radius: 20px;
+  background-color: rgba(255,255,255,0.05);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  color: inherit;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+section h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+#profile {
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+#profile .profile p {
+  text-align: center;
+  max-width: 700px;
+  margin: 0.5rem auto;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+}
+
+.works {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.work-card {
+  display: block;
+  padding: 1.5rem;
+  text-align: center;
+  border-radius: 20px;
+  background-color: rgba(255,255,255,0.08);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.work-card img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+.work-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.work-card a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.8rem 1.8rem;
+  border-radius: 18px;
+  background-color: rgba(0,188,212,0.1);
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+}
+
+.work-card a:hover {
+  background-color: #00bcd4;
+  color: #fff;
+}
+
+.work-card p.note {
+  margin-top: 0.5rem;
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  color: inherit;
+}
+
+#cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+  z-index: 99999;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+#cookie-banner p {
+  flex-basis: 100%;
+  margin-bottom: 6px;
+}
+
+#cookie-banner button {
+  padding: 6px 12px;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#cookie-banner button#minimal-cookie {
+  background: #555;
+  color: #fff;
+}
+
+#cookie-banner button#accept-all-cookie {
+  background: #2a9d8f;
+  color: #fff;
+}
+
+#cookie-banner button#reject-cookie {
+  background: #d62828;
+  color: #fff;
+}
+
+@media (max-width: 480px) {
+  .work-card img {  
+      width: 64px;  
+      height: 64px;  
+  }  
+
+  h1 {  
+      font-size: clamp(1.4rem, 6vw, 1.8rem);  
+  }  
+
+  section h2 {  
+      font-size: clamp(1.2rem, 5vw, 1.6rem);  
+  }  
+
+  #profile .profile p {  
+      font-size: clamp(0.85rem, 2vw, 0.95rem);  
+  }  
+
+  #cookie-banner {  
+      font-size: 13px;  
+  }  
+
+  #cookie-banner button {  
+      padding: 5px 10px;  
+      font-size: 0.85rem;  
+  }
+}
