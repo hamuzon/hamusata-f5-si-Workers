@@ -7,9 +7,9 @@ export function handleSub(request) {
 <title data-lang="page_title">HAMUSATA – ホームページ</title>
 
 <!-- Favicon -->
-<link rel="icon" href="https://hamusata.f5.si/favicon.ico" sizes="any">
-  <link rel="icon" href="https://hamusata.f5.si/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="https://hamusata.f5.si/icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.png">
 
 
 <!-- Google Fonts -->
@@ -39,11 +39,11 @@ export function handleSub(request) {
 <meta property="og:description" content="HAMUSATA.f5.si のホームページです / This is the homepage of HAMUSATA.f5.si">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hamusata.f5.si">
-<meta property="og:image" content="https://hamusata.f5.si/icon_500_500.webp">
+<meta property="og:image" content="/icon_500_500.webp">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="HAMUSATA – ホームページ">
 <meta name="twitter:description" content="HAMUSATA.f5.si のホームページです / This is the homepage of HAMUSATA.f5.si">
-<meta name="twitter:image" content="https://hamusata.f5.si/icon_500_500.webp">
+<meta name="twitter:image" content="/icon_500_500.webp">
 
 <!-- 言語切替ボタンスタイル -->
 <style>

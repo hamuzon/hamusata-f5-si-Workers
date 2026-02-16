@@ -7,11 +7,11 @@ export function handleTerms(request) {
   <title>利用規約・プライバシーポリシー / Terms of Service & Privacy Policy – HAMUSATA</title>
 
   <!-- Favicon -->
-  <link rel="icon" href="https://hamusata.f5.si/favicon.ico" type="image/x-icon">
-  <link rel="icon" type="image/png" href="https://hamusata.f5.si/icon.png" sizes="32x32">
-  <link rel="icon" type="image/webp" href="https://hamusata.f5.si/icon.webp" sizes="32x32">
-  <link rel="icon" type="image/svg+xml" href="https://hamusata.f5.si/icon.svg">
-  <link rel="apple-touch-icon" href="https://hamusata.f5.si/icon.png">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" href="/icon.png" sizes="32x32">
+  <link rel="icon" type="image/webp" href="/icon.webp" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="/icon.svg">
+  <link rel="apple-touch-icon" href="/icon.png">
 
   <!-- 共通CSS -->
   <link rel="stylesheet" href="css/style.css">

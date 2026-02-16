@@ -8,8 +8,8 @@ export function handleError404(request) {
 
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="icon" href="icon.webp" type="image/webp">
-  <link rel="icon" href="https://hamusata.f5.si/icon.svg" type="image/svg+xml">
-  <link rel="icon" href="https://hamusata.f5.si/icon.webp" type="image/webp">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="/icon.webp" type="image/webp">
 
   <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
 
