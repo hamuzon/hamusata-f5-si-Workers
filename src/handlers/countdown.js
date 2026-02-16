@@ -1,4 +1,4 @@
-export async function onRequest(context) {
+export async function handleCountdown(context) {
     const { request } = context;
     const url = new URL(request.url);
     const hostname = url.hostname;
