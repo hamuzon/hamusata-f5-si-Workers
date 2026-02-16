@@ -32,9 +32,25 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
+    // Collapse duplicate slashes first (e.g. /terms//ui -> /terms/ui)
+    const collapsedPathname = pathname.replace(/\/{2,}/g, '/');
+    if (collapsedPathname !== pathname) {
+      url.pathname = collapsedPathname;
+      return Response.redirect(url.toString(), 301);
+    }
+
     // Normalize trailing slash (except root)
     if (pathname.length > 1 && pathname.endsWith('/')) pathname = pathname.slice(0, -1);
     if (pathname === '') pathname = '/';
+
+    // Canonicalize malformed child paths for single-page routes.
+    // e.g. /terms/ui, /sub/ui, /countdown/ui, /404/ui -> base route
+    const singlePageRoutes = new Set(['/sub', '/terms', '/countdown', '/404']);
+    const firstSegment = `/${pathname.split('/').filter(Boolean)[0] || ''}`;
+    if (singlePageRoutes.has(firstSegment) && pathname !== firstSegment) {
+      url.pathname = firstSegment;
+      return Response.redirect(url.toString(), 301);
+    }
 
     // 1. Middleware
     const middlewareResponse = handleMiddleware(request);
