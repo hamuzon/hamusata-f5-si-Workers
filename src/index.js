@@ -36,6 +36,13 @@ export default {
     if (pathname.length > 1 && pathname.endsWith('/')) pathname = pathname.slice(0, -1);
     if (pathname === '') pathname = '/';
 
+    // Canonicalize malformed /terms paths (e.g. /terms/ui, /terms//ui, /terms/...)
+    // to avoid broken UI behavior on non-canonical terms routes.
+    if (pathname.startsWith('/terms/') && pathname !== '/terms') {
+      url.pathname = '/terms';
+      return Response.redirect(url.toString(), 301);
+    }
+
     // 1. Middleware
     const middlewareResponse = handleMiddleware(request);
     if (middlewareResponse) return middlewareResponse;
