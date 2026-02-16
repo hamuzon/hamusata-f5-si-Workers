@@ -93,7 +93,7 @@ export function handleHome(request) {
         <li><a href="#sns" data-lang="nav_sns">SNSリンク</a></li>
         <li><a href="/terms" data-lang="nav_terms">利用規約・プライバシーポリシー</a></li>
         <li>
-          <a href="https://github.com/hamuzon/hamusata.f5.si" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:6px;">
+          <a href="https://github.com/hamuzon/hamusata-f5-si-Workers" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:6px;">
             <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
                  alt="GitHub" style="width:20px; height:20px; background-color:#222; border-radius:50%; padding:2px;">
             <span data-lang="nav_github">site-Code-GitHub</span>
