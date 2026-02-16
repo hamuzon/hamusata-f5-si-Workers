@@ -1,5 +1,6 @@
 export async function handleCountdown(context) {
-    const { request } = context;
+    // contextがRequestオブジェクトそのものである場合と、{ request } の形である場合の両方に対応
+    const request = context.request || context;
     const url = new URL(request.url);
     const hostname = url.hostname;
 
