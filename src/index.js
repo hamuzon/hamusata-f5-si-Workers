@@ -6,6 +6,7 @@ import { handleSub } from './handlers/sub.js';
 import { handleTerms } from './handlers/terms.js';
 import { handleError404 } from './handlers/error404.js';
 import { handleRedirects } from './handlers/redirects.js';
+import { handleYt } from './handlers/yt.js';
 
 export default {
   async fetch(request, env) {
@@ -76,6 +77,9 @@ export default {
     }
     if (pathname === '/countdown') {
       return handleCountdown(request);
+    }
+    if (pathname === '/yt') {
+      return handleYt(request);
     }
     if (pathname === '/404') {
       const newHeaders = new Headers(request.headers);
