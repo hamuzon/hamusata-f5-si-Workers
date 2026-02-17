@@ -9,7 +9,7 @@ import { handleRedirects } from './handlers/redirects.js';
 import { handleYt } from './handlers/yt.js';
 
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     let pathname = url.pathname.toLowerCase();
 
@@ -55,25 +55,6 @@ export default {
     if (singlePageRoutes.has(firstSegment) && pathname !== firstSegment) {
       url.pathname = firstSegment;
       return Response.redirect(url.toString(), 301);
-    }
-
-    // Analytics Engine へのログ送信
-    // バインディング名にハイフンが含まれるため env["..."] でアクセスします
-    if (env["Data-hamusata-1"]) {
-      ctx.waitUntil(
-        (async () => {
-          env["Data-hamusata-1"].writeDataPoint({
-            blobs: [
-              request.method,                        // Blob 1: Method
-              pathname,                              // Blob 2: Path
-              request.cf?.country || "XX",           // Blob 3: Country
-              request.headers.get("user-agent") || "" // Blob 4: UA
-            ],
-            doubles: [1], // カウント用などに数値を入れる (例: 1リクエスト=1)
-            indexes: ["hamusata-1"] // フィルタリング用のインデックス
-          });
-        })()
-      );
     }
 
     // 1. Middleware

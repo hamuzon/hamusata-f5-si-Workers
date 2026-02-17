@@ -21,11 +21,3 @@ invocation_logs = true
 enabled = true
 persist = true
 head_sampling_rate = 1
-
-[[d1_databases]]
-binding = "hamusata_1"
-database_name = "hamusata-1"
-
-[[analytics_engine_datasets]]
-binding = "Data-hamusata-1"
-dataset = "hamusata_Dataset-1"
