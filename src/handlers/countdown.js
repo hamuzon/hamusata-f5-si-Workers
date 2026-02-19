@@ -1,14 +1,17 @@
 export async function handleCountdown(context) {
-    // contextがRequestオブジェクトそのものである場合と、{ request } の形である場合の両方に対応
+    // 1. Parse Request & Hostname
+    // Support both direct Request object and { request } context object
     const request = context.request || context;
     const url = new URL(request.url);
     const hostname = url.hostname;
 
+    // 2. Calculate Dates
     const baseYear = 2025;
     const currentYear = parseInt(new Intl.DateTimeFormat('en-US', { year: 'numeric', timeZone: 'Asia/Tokyo' }).format(new Date()));
     const nextYear = currentYear + 1;
     const yearDisplay = currentYear > baseYear ? `${baseYear}–${currentYear}` : baseYear;
 
+    // 3. Determine Copyright Text based on Hostname
     let copyrightContent = "";
     if (hostname === "hamuzon.github.io") {
         copyrightContent = `&copy; ${yearDisplay} <a href="https://hamuzon.github.io" target="_blank" rel="noopener noreferrer">@hamuzon</a>`;
@@ -22,6 +25,7 @@ export async function handleCountdown(context) {
         copyrightContent = `&copy; ${yearDisplay} New Year Countdown`;
     }
 
+    // 4. Generate HTML
     const html = `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -280,18 +284,30 @@ export async function handleCountdown(context) {
 </body>
 </html>`;
 
-    // ETag生成と304応答の処理
+    // 5. Handle ETag & Caching
     const encoder = new TextEncoder();
     const data = encoder.encode(html);
     const hashBuffer = await crypto.subtle.digest('SHA-1', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const etag = `"${hashArray.map(b => b.toString(16).padStart(2, '0')).join('')}"`;
 
+    // Check If-None-Match
     if (request.headers.get('If-None-Match') === etag) {
-        return new Response(null, { status: 304, headers: { "ETag": etag, "Cache-Control": "public, max-age=3600" } });
+        return new Response(null, {
+            status: 304,
+            headers: {
+                "ETag": etag,
+                "Cache-Control": "public, max-age=3600"
+            }
+        });
     }
 
+    // Return 200 OK
     return new Response(html, {
-        headers: { "content-type": "text/html;charset=UTF-8", "ETag": etag, "Cache-Control": "public, max-age=3600" },
+        headers: {
+            "content-type": "text/html;charset=UTF-8",
+            "ETag": etag,
+            "Cache-Control": "public, max-age=3600"
+        },
     });
 }

@@ -1,9 +1,13 @@
 export async function handleYt(request) {
+  // 1. Parse URL Parameters
   const url = new URL(request.url);
   const v = url.searchParams.get("v");
   const typeParam = url.searchParams.get("type") || "";
   const t = url.searchParams.get("t") || "";
 
+  // =================================================================
+  // 2. Render Landing Page (if no video ID provided)
+  // =================================================================
   if (!v) {
     const html = `<!DOCTYPE html>
 <html lang="ja">
@@ -11,7 +15,9 @@ export async function handleYt(request) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YouTube Link Service</title>
-<link rel="icon" href="https://my.hamusata.f5.si/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://my.hamusata.f5.si/favicon.ico" sizes="any">
+<link rel="icon" href="https://my.hamusata.f5.si/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="https://my.hamusata.f5.si/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
@@ -191,6 +197,7 @@ copyBtn.addEventListener("click", () => {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const etag = `"${hashArray.map(b => b.toString(16).padStart(2, '0')).join('')}"`;
 
+    // Check ETag for 304 Not Modified
     if (request.headers.get('If-None-Match') === etag) {
       return new Response(null, {
         status: 304,
@@ -201,6 +208,7 @@ copyBtn.addEventListener("click", () => {
       });
     }
 
+    // Return 200 OK
     return new Response(html, {
       headers: {
         "content-type": "text/html; charset=UTF-8",
@@ -210,6 +218,9 @@ copyBtn.addEventListener("click", () => {
     });
   }
 
+  // =================================================================
+  // 3. Determine Redirect Target
+  // =================================================================
   const ua = request.headers.get("user-agent") || "";
   const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
 
@@ -222,6 +233,7 @@ copyBtn.addEventListener("click", () => {
     redirectUrl = `https://youtu.be/${v}`;
   }
 
+  // Append timestamp if present
   if (t) {
     const separator = redirectUrl.includes("?") ? "&" : "?";
     redirectUrl += `${separator}t=${encodeURIComponent(t)}`;

@@ -33,10 +33,12 @@ const REDIRECTS = new Map([
 ]);
 
 export function handleRedirects(request, normalizedPath) {
+    // 1. Normalize Path for Lookup
     const path = String(normalizedPath || '').toLowerCase();
     const trimmed = path.replace(/^\/+|\/+$/g, '');
     const lookupPath = trimmed ? `/${trimmed}` : '/';
 
+    // 2. Lookup Redirect Target
     const target = REDIRECTS.get(lookupPath);
     if (target) {
         return Response.redirect(new URL(target, request.url).toString(), 301);

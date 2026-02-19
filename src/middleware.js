@@ -1,5 +1,7 @@
-// --- Constants ---
-const ENABLED = 0; // 0 = OFF, 1 = ON, 2 = Domain Unification
+// =================================================================
+// Configuration & Constants
+// =================================================================
+const ENABLED = 0; // 0 = OFF, 1 = ON, 2 = Domain Unification (Force Target Domain)
 const TARGET_DOMAIN = "hamusata.f5.si";
 
 const EXCLUDED_EXTENSIONS = new Set([
@@ -14,23 +16,32 @@ const EXCLUDED_EXTENSIONS = new Set([
 const BOT_REGEX = /bot|googlebot|bingbot|yandex|baidu|duckduckbot|slurp|ia_archiver/i;
 
 export function handleMiddleware(request) {
-    if (ENABLED === 0) return null;
+    // 1. Check if Middleware is Enabled
+    if (ENABLED === 0) {
+        return null;
+    }
 
     const url = new URL(request.url);
     const hostname = url.hostname.toLowerCase();
     const pathname = url.pathname.toLowerCase();
 
-    // --- Basic Exclusions ---
-    if (pathname === "/favicon.ico") return null;
+    // 2. Basic Exclusions (Favicon & Static Assets)
+    if (pathname === "/favicon.ico") {
+        return null;
+    }
 
-    // Static Assets Check
     const lastDotIndex = pathname.lastIndexOf('.');
     if (lastDotIndex !== -1) {
         const ext = pathname.slice(lastDotIndex);
-        if (EXCLUDED_EXTENSIONS.has(ext)) return null;
+        if (EXCLUDED_EXTENSIONS.has(ext)) {
+            return null;
+        }
     }
 
-    // --- Mode 2: Domain Unification (High Priority) ---
+
+    // =================================================================
+    // Mode 2: Domain Unification (High Priority)
+    // =================================================================
     if (ENABLED === 2) {
         if (hostname !== TARGET_DOMAIN) {
             url.hostname = TARGET_DOMAIN;
@@ -39,14 +50,22 @@ export function handleMiddleware(request) {
         return null; // Already on target domain, skip further middleware
     }
 
-    // --- Domain Target Check (for Mode 1) ---
-    if (!hostname.endsWith(TARGET_DOMAIN)) return null;
 
-    // Bot Detection (Expensive)
+    // =================================================================
+    // Mode 1: Mobile/PC Redirect Logic
+    // =================================================================
+
+    // 3. Domain Scope Check
+    if (!hostname.endsWith(TARGET_DOMAIN)) {
+        return null;
+    }
+
+    // 4. Bot Detection (Skip redirects for bots)
     const userAgent = request.headers.get("user-agent") || "";
-    if (BOT_REGEX.test(userAgent)) return null;
+    if (BOT_REGEX.test(userAgent)) {
+        return null;
+    }
 
-    // --- Mode 1: Mobile/PC Redirect ---
     if (ENABLED === 1) {
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
         const baseWithoutWWW = hostname.replace(/^www\./, "");
