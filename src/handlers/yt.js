@@ -11,7 +11,7 @@ export async function handleYt(request) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YouTube Link Service</title>
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://my.hamusata.f5.si/favicon.ico" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">

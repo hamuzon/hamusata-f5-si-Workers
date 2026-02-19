@@ -6,8 +6,8 @@ export async function handleError404(request) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 Not Found / ページが見つかりません</title>
 
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="icon" href="/icon.webp" type="image/webp">
+  <link rel="icon" href="https://my.hamusata.f5.si/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="https://my.hamusata.f5.si/icon.webp" type="image/webp">
 
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#2a9d8f">

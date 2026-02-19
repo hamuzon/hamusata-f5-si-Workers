@@ -6,11 +6,11 @@ export async function handleTerms(request) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>利用規約・プライバシーポリシー / Terms of Service & Privacy Policy – HAMUSATA</title>
 
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="icon" type="image/png" href="/icon.png" sizes="32x32">
-  <link rel="icon" type="image/webp" href="/icon.webp" sizes="32x32">
-  <link rel="icon" type="image/svg+xml" href="/icon.svg">
-  <link rel="apple-touch-icon" href="/icon.png">
+  <link rel="icon" href="https://my.hamusata.f5.si/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" href="https://my.hamusata.f5.si/icon.png" sizes="32x32">
+  <link rel="icon" type="image/webp" href="https://my.hamusata.f5.si/icon.webp" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="https://my.hamusata.f5.si/icon.svg">
+  <link rel="apple-touch-icon" href="https://my.hamusata.f5.si/icon.png">
 
   <link rel="stylesheet" href="/css/style.css">
 

@@ -6,9 +6,9 @@ export async function handleSub(request) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-lang="page_title">HAMUSATA – ホームページ</title>
 
-<link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/icon.png">
+<link rel="icon" href="https://my.hamusata.f5.si/favicon.ico" sizes="any">
+  <link rel="icon" href="https://my.hamusata.f5.si/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="https://my.hamusata.f5.si/icon.png">
 
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#2a9d8f">
