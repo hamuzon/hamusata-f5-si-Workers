@@ -67,7 +67,7 @@ export function handleMiddleware(request) {
     }
 
     if (ENABLED === 1) {
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Opera Mini/i.test(userAgent);
         const baseWithoutWWW = hostname.replace(/^www\./, "");
         const hasM = baseWithoutWWW.startsWith("m.");
         const pureBase = baseWithoutWWW.replace(/^m\./, "");
