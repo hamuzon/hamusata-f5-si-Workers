@@ -45,7 +45,6 @@ const links = [
     "https://time-zone.hamusata.f5.si",
     "https://todo.hamusata.f5.si",
     "https://video-hub.hamusata.f5.si/",
-    "https://world.hamusata.f5.si/",
     "https://www.hamusata.f5.si/",
     "https://youtube.hamusata.f5.si/",
     "https://yt.hamusata.f5.si/",
