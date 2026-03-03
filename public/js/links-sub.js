@@ -48,7 +48,11 @@ async function loadLinks() {
     const langData = await langDataRes.json();
     const lang = localStorage.getItem("lang") || (navigator.language.startsWith("en") ? "en" : "ja");
 
-    rows.slice(1).forEach(row => {
+    const firstRow = rows[0] || [];
+    const looksLikeHeader = String(firstRow[4] || "").toLowerCase() === "section";
+    const dataRows = looksLikeHeader ? rows.slice(1) : rows;
+
+    dataRows.forEach(row => {
       const [title, description, image, link, section, internalLinkFlag] = row;
       if (!section || !sections[section] || !sections[section].container) return;
 
