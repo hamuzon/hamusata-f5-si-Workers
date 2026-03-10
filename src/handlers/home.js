@@ -15,24 +15,22 @@ export async function handleHome(request) {
 
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#2a9d8f">
+  <link rel="preload" href="/lang/lang.json" as="fetch" crossorigin>
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/mobile-menu.css" />
 
-  <script>
-    const themeCSS = [
-      "/css/dark.css",
-      "/css/dark-hc.css",
-      "/css/dark-mc.css",
-      "/css/light.css",
-      "/css/light-hc.css",
-      "/css/light-mc.css"
-    ];
-    themeCSS.forEach(href => document.write(\`<link rel="stylesheet" href="\${href}">\`));
-  </script>
+  <!-- Preload non-critical theme CSS -->
+  <link rel="stylesheet" href="/css/dark.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/dark-hc.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/dark-mc.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/light.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/light-hc.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/light-mc.css" media="print" onload="this.media='all'">
 
   <meta name="description" content="HAMUSATA.f5.si のホームページです / This is the homepage of HAMUSATA.f5.si" />
   <meta property="og:title" content="HAMUSATA – ホームページ" />
@@ -51,7 +49,8 @@ export async function handleHome(request) {
       position: fixed;
       top: 16px;
       left: 16px;
-      padding: 0.5rem 1rem;
+      padding: 0.8rem 1.2rem;
+      min-height: 48px;
       font-size: 0.95rem;
       border-radius: 12px;
       border: 1px solid rgba(0,0,0,0.2);
@@ -71,6 +70,7 @@ export async function handleHome(request) {
       box-shadow: 0 4px 12px rgba(255,255,255,0.06);
     }
     #lang-switch:hover { transform: scale(1.05); background: rgba(0,188,212,0.18); }
+    section { content-visibility: auto; contain-intrinsic-size: 1px 500px; }
   </style>
 </head>
 
@@ -125,49 +125,49 @@ export async function handleHome(request) {
     <div class="works">
 
       <div class="work-card">
-        <img src="/icon.webp" alt="HAMUSATA icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_main_title">HAMUSATA – ホームページ</h3>
         <p data-lang="w_main_desc">メインのポータルリンク。色々なものをまとめています。</p>
         <a href="https://home.hamusata.f5.si" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="GitHub Pages icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_github_pages_title">GitHub版 – ホームページ</h3>
         <p data-lang="w_github_pages_desc">GitHub Pages 版ホームページ。</p>
         <a href="https://hamuzon.github.io" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="hamuzon icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_hamuzon_title">hamuzon – ホームページ</h3>
         <p data-lang="w_hamuzon_desc">hamuzon-jp.f5.si のホームページ・リンクポータル版 (fc2の一部コピーサイト)</p>
         <a href="https://hamuzon-jp.f5.si/" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="hamuzon FC2 icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_fc2_title">hamuzon (FC2)系 – ホームページ</h3>
         <p data-lang="w_fc2_desc">FC2版ホームページ。いろんなコードやコンテンツがあります。</p>
         <a href="https://hamuzon.web.fc2.com/" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="link-s icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_link_s_title">link-s.f5.si – ショートカットリンクサービス</h3>
         <p data-lang="w_link_s_desc">短縮URL・ショートカットリンクサービス。</p>
         <a href="https://link-s.f5.si" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="go.link-s icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_go_link_title">go.link-s.f5.si – カスタムパス対応版</h3>
         <p data-lang="w_go_link_desc">任意のパスで短縮リンクを作れるカスタムリンクサービス。</p>
         <a href="https://go.link-s.f5.si" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="pw.link-s icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_pw_title">pw.link-s.f5.si – パスワード生成サービス</h3>
         <p data-lang="w_pw_desc">APIベースのパスワード生成サービス。ログ保存等は一切ありません。</p>
         <a href="https://pw.link-s.f5.si" data-lang="link_view">見る</a>
@@ -176,14 +176,14 @@ export async function handleHome(request) {
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="www.link-s icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_www_title">www.link-s.f5.si</h3>
         <p data-lang="w_www_desc">リンクのメイン機能はショートカットリンクサービスのlink-s.f5.si 系列作品集一覧。</p>
         <a href="https://www.link-s.f5.si/" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="利用規約 icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_terms_title">利用規約・プライバシーポリシー</h3>
         <p data-lang="w_terms_desc">サイト利用規約とプライバシーポリシーの確認はこちら。</p>
         <a href="/terms" data-lang="link_view">確認する</a>
@@ -196,7 +196,7 @@ export async function handleHome(request) {
     <h2 data-lang="random_title">ランダム作品</h2>
     <div class="works">
       <div class="work-card">
-        <img src="/icon.webp" alt="ランダム作品 icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="random_card_title">ランダム作品</h3>
         <p data-lang="random_card_desc">作品をランダムに開くボタンです。</p>
         <a href="/random" data-lang="link_open">開く</a>
@@ -208,7 +208,7 @@ export async function handleHome(request) {
     <h2 data-lang="status_title">サービス稼働状況 / Status Page</h2>
     <div class="works">
       <div class="work-card">
-        <img src="/icon.webp" alt="Status icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="status_card_title">サービス稼働状況</h3>
         <p data-lang="status_note">セキュリティ設定変更などにより、監視ツールがサイトにアクセスできず落ちた判定となる場合があります。実際の状態と異なる可能性がありますので、参考としてご確認ください。</p>
         <a href="https://stats.uptimerobot.com/tT7bs2uEHa" data-lang="link_view">稼働状況を見る</a>
@@ -220,7 +220,7 @@ export async function handleHome(request) {
     <h2 data-lang="mutual_title">相互リンク / Mutual Links</h2>
     <div class="works">
       <div class="work-card">
-        <img src="/icon.webp" alt="Mutual Links icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="mutual_card_title">相互リンクページ</h3>
         <p data-lang="mutual_card_desc">こちらをクリックすると相互リンクページに移動します。</p>
         <a href="/links" data-lang="link_open">開く</a>
@@ -233,35 +233,35 @@ export async function handleHome(request) {
     <div class="works">
 
       <div class="work-card">
-        <img src="/icon.webp" alt="Scratch icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="sns_scratch1_title">Scratch</h3>
         <p data-lang="sns_scratch1_desc">hamusataアカウント</p>
         <a href="/s" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="Scratch icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="sns_scratch2_title">Scratch</h3>
         <p data-lang="sns_scratch2_desc">hamuzonアカウント</p>
         <a href="/s-2" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="GitHub icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="sns_github_title">GitHub</h3>
         <p data-lang="sns_github_desc">GitHubアカウント</p>
         <a href="/github" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="Bluesky icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="sns_bsky_title">Bluesky</h3>
         <p data-lang="sns_bsky_desc">Blueskyアカウント</p>
         <a href="/bluesky" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="Twitter(X) icon" loading="lazy" decoding="async">
+        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="sns_x_title">Twitter (X)</h3>
         <p data-lang="sns_x_desc">@hamu_sata アカウント</p>
         <a href="/x" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
@@ -274,8 +274,8 @@ export async function handleHome(request) {
     &copy; <span id="year"></span> <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – <span data-lang="footer_reserved">All rights reserved.</span><br>
   </footer>
 
-  <script src="/js/script.js"></script>
-  <script src="/js/lang-switch.js"></script>
+  <script src="/js/script.js" defer></script>
+  <script src="/js/lang-switch.js" defer></script>
 
   <script>
     if ('serviceWorker' in navigator) {
