@@ -17,6 +17,8 @@ async function loadLinks() {
   for (const key in sections) {
     if (sections[key].container) {
       sections[key].container.innerHTML = `<p>${sections[key].default}</p>`;
+      // レイアウトシフトを防ぐために最小の高さを設定
+      sections[key].container.style.minHeight = "200px";
     }
   }
 
