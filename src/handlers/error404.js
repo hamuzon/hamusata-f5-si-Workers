@@ -155,94 +155,28 @@ export async function handleError404(request) {
   </style>
 </head>
 
-<body class="light">
-
-  <button id="lang-switch" aria-label="言語切替 / Language switch">🌐 English</button>
-
-  <h1 id="page-title">404 ページが見つかりません</h1>
-
-  <p id="page-desc">ページが存在しません</p>
-
-  <p class="subtext" id="subtext">申し訳ありません</p>
-
-  <a class="back" href="/" id="back-btn">トップページへ戻る</a>
-
-  <footer>
-    <span>&copy; <span id="year"></span> <a href="/" id="footer-link">＠hamusata</a></span>
-    <span>- <span id="footer-reserved">All rights reserved</span></span>
-  </footer>
+<body>
+  <h1>404 - error</h1>
+  <p>エラーが発生しました: 見つかりません / Not Found</p>
+  <p class="subtext">Sorry, Not Found.</p>
+  <a id="backLink" class="back" href="/">トップページへ戻る / Back to Home</a>
 
   <script>
-    const baseYear = 2025;
-    const now = new Date().getFullYear();
-    document.getElementById("year").textContent =
-      now > baseYear ? \`\${baseYear}~\${now}\` : \`\${baseYear}\`;
+    (() => {
+      const backLink = document.getElementById("backLink");
+      if (!backLink) return;
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const themeParam = urlParams.get('theme');
+      const path = window.location.pathname;
 
-    if(themeParam==='dark'||themeParam==='light'){
-      document.body.className = themeParam;
-    } else {
-      function applyTheme(){
-        document.body.className = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      if (path.startsWith("/gos/yt/")) {
+        backLink.href = "/gos/yt";
+        return;
       }
-      applyTheme();
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
-    }
 
-    const langData = {
-      "ja": {
-        "page_title":"404 ページが見つかりません",
-        "page_desc":"ページが存在しません",
-        "subtext":"申し訳ありません",
-        "back":"トップページへ戻る",
-        "footer_reserved":"All rights reserved"
-      },
-      "en": {
-        "page_title":"404 Not Found",
-        "page_desc":"Page Could Not Be Found",
-        "subtext":"Sorry, Not Found",
-        "back":"Back to Top",
-        "footer_reserved":"All rights reserved"
+      if (path.startsWith("/gos/")) {
+        backLink.href = "/gos/";
       }
-    };
-
-    function loadLang(lang){
-      const t = langData[lang] || langData["ja"];
-      document.getElementById("page-title").textContent = t.page_title;
-      document.getElementById("page-desc").textContent = t.page_desc;
-      document.getElementById("subtext").textContent = t.subtext;
-      document.getElementById("back-btn").textContent = t.back;
-      document.getElementById("footer-reserved").textContent = t.footer_reserved;
-      document.documentElement.lang = lang;
-      document.getElementById("lang-switch").textContent = lang==="ja"?"🌐 English":"🌐 日本語";
-      localStorage.setItem("lang", lang);
-
-      const currentParams = window.location.search;
-      if(!currentParams) return;
-
-      document.querySelectorAll('a[href]').forEach(link=>{
-        const url = new URL(link.href, window.location.origin);
-        if(url.origin !== window.location.origin) return;
-        if(url.search) return;
-        url.search = currentParams;
-        link.href = url.pathname + url.search + url.hash;
-      });
-    }
-
-    function initLang(){
-      const saved = localStorage.getItem("lang");
-      const browser = navigator.language.startsWith("en") ? "en" : "ja";
-      loadLang(saved || browser);
-
-      document.getElementById("lang-switch").addEventListener("click", ()=>{
-        const next = (localStorage.getItem("lang")==="ja") ? "en" : "ja";
-        loadLang(next);
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", initLang);
+    })();
   </script>
 
   <script>
@@ -252,7 +186,6 @@ export async function handleError404(request) {
       });
     }
   </script>
-
 </body>
 </html>`;
 
