@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://home.hamusata.f5.si/public/hamusata.f5.si-sitemap.xml

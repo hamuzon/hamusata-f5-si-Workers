@@ -71,16 +71,19 @@ export async function handleHome(request) {
     }
     #lang-switch:hover { transform: scale(1.05); background: rgba(0,188,212,0.18); }
     section { content-visibility: auto; contain-intrinsic-size: 1px 500px; }
+    .skip-link { position: absolute; top: -40px; left: 0; background: #2a9d8f; color: white; padding: 8px; z-index: 2000; transition: top 0.3s; }
+    .skip-link:focus { top: 0; }
   </style>
 </head>
 
 <body class="light">
 
+  <a href="#page-main" class="skip-link">Skip to content</a>
   <button id="lang-switch" aria-label="言語切替 / Language switch">🌐 English</button>
 
   <header>
     <a href="/" id="home" class="banner-link" aria-label="HAMUSATA ホームへ移動">
-      <img src="/hamusata_399-120.webp" alt="hamusata home banner" width="399" height="120" loading="lazy" decoding="async">
+      <img src="/hamusata_399-120.webp" alt="hamusata home banner" width="399" height="120" fetchpriority="high" decoding="async">
     </a>
 
     <button id="menu-toggle" aria-label="メニューを開く">
@@ -109,6 +112,7 @@ export async function handleHome(request) {
     <div id="menu-overlay"></div>
   </header>
 
+  <main id="page-main">
   <h1 data-lang="page_title">HAMUSATA ホームページ</h1>
 
   <section id="profile">
@@ -269,6 +273,7 @@ export async function handleHome(request) {
 
     </div>
   </section>
+  </main>
 
   <footer>
     &copy; <span id="year"></span> <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – <span data-lang="footer_reserved">All rights reserved.</span><br>
