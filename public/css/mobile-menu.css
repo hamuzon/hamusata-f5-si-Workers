@@ -8,7 +8,7 @@
     top: 16px;
     right: 16px;
     width: auto;
-    min-width: 80px;
+    min-width: 80px; /* Restore horizontal width */
     height: 48px;
     background: rgba(255, 255, 255, 0.15);
     -webkit-backdrop-filter: blur(16px);
@@ -20,11 +20,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 0 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     transition: all 0.2s ease;
-    flex-direction: row;
 }
 
 .dark #menu-toggle {
@@ -54,17 +51,6 @@
     background-color: #fff;
 }
 
-.menu-text {
-    font-size: 0.95rem;
-    font-weight: bold;
-    color: #000;
-    line-height: 1;
-}
-
-.dark .menu-text {
-    color: #fff;
-}
-
 #menu-toggle:hover {
     transform: scale(1.05);
     background: rgba(0, 188, 212, 0.18);
@@ -80,6 +66,7 @@ body.menu-open .hamburger-line:nth-child(2) {
 body.menu-open .hamburger-line:nth-child(3) {
     transform: translateY(-6px) rotate(-45deg);
 }
+
 
 
 

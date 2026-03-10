@@ -90,7 +90,6 @@ export async function handleSub(request) {
       <span class="hamburger-line"></span>
       <span class="hamburger-line"></span>
     </div>
-    <span class="menu-text" data-lang="menu">メニュー</span>
   </button>
 
   <nav id="mobile-menu">
