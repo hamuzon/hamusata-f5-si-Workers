@@ -1,7 +1,7 @@
 export async function handleHome(request) {
   // 1. Define HTML Content
   const html = `<!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -43,8 +43,17 @@ export async function handleHome(request) {
   <meta name="twitter:description" content="HAMUSATA.f5.si のホームページです / This is the homepage of HAMUSATA.f5.si" />
   <meta name="twitter:image" content="/icon_500_500.webp" />
 
+  <script>
+    (function() {
+      const theme = new URLSearchParams(window.location.search).get('theme') || 
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.className = theme + ' preloading';
+    })();
+  </script>
+
   <style>
     * { box-sizing: border-box; overflow-wrap: break-word; }
+    .preloading *, .preloading { transition: none !important; }
     #lang-switch {
       position: fixed;
       top: 16px;
@@ -63,12 +72,6 @@ export async function handleHome(request) {
       box-shadow: 0 4px 12px rgba(0,0,0,0.12);
       line-height:1;
     }
-    body.dark #lang-switch {
-      background: rgba(0,0,0,0.35);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 4px 12px rgba(255,255,255,0.06);
-    }
     #lang-switch:hover { transform: scale(1.05); background: rgba(0,188,212,0.18); }
     section { content-visibility: auto; contain-intrinsic-size: 1px 500px; }
     .skip-link { position: absolute; top: -40px; left: 0; background: #2a9d8f; color: white; padding: 8px; z-index: 2000; transition: top 0.3s; }
@@ -76,7 +79,7 @@ export async function handleHome(request) {
   </style>
 </head>
 
-<body class="light">
+<body>
 
   <a href="#page-main" class="skip-link">Skip to content</a>
   <button id="lang-switch" aria-label="言語切替 / Language switch">🌐 English</button>
@@ -283,11 +286,18 @@ export async function handleHome(request) {
   <script src="/js/lang-switch.js" defer></script>
 
   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js');
-      });
-    }
+    (function() {
+      // Remove preloading class after scripts execute
+      setTimeout(() => {
+        document.documentElement.classList.remove('preloading');
+      }, 50);
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
+      }
+    })();
   </script>
 
 </body>

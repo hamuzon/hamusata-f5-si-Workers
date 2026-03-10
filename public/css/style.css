@@ -25,7 +25,7 @@ body {
 /* =========================
 ライト・ダーク背景
 ========================= */
-body.light {
+.light body, body.light {
   background:
     radial-gradient(ellipse 80% 60% at 70% 20%, rgba(175,109,255,0.85), transparent 68%),
     radial-gradient(ellipse 70% 60% at 20% 80%, rgba(255,100,180,0.75), transparent 68%),
@@ -35,7 +35,7 @@ body.light {
   color: #000;
 }
 
-body.dark {
+.dark body, body.dark {
   background-color: #0a0a0a;
   background-image:
     radial-gradient(ellipse at 20% 30%, rgba(56,189,248,0.4) 0%, transparent 60%),
