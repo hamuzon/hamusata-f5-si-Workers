@@ -85,12 +85,17 @@ export async function handleSub(request) {
   </a>
 
   <button id="menu-toggle" aria-label="メニューを開く" aria-expanded="false">
-    <span></span><span></span><span></span>
+    <div class="hamburger-lines">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </div>
+    <span class="menu-text" data-lang="menu">メニュー</span>
   </button>
 
   <nav id="mobile-menu">
     <ul>
-      <li><a href="#home" data-lang="nav_home">ホーム</a></li>
+      <li><a href="#home" data-lang="nav_home" class="nav-home">ホーム</a></li>
       <li><a href="#profile" data-lang="nav_profile">自己紹介</a></li>
       <li><a href="#portfolio" data-lang="nav_portfolio">ポートフォリオ</a></li>
       <li><a href="#random" data-lang="nav_random">ランダム作品</a></li>
