@@ -45,9 +45,25 @@ export async function handleHome(request) {
 
   <script>
     (function() {
-      const theme = new URLSearchParams(window.location.search).get('theme') || 
-                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      // 1. Get theme from URL or localStorage (PWA supports local storage better)
+      const urlParams = new URLSearchParams(window.location.search);
+      let theme = urlParams.get('theme');
+      
+      if (!theme) {
+        theme = localStorage.getItem('site-theme');
+      }
+      
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      
+      // 2. Set theme synchronously
       document.documentElement.className = theme + ' preloading';
+      
+      // 3. Persist theme if it came from URL
+      if (urlParams.has('theme')) {
+        localStorage.setItem('site-theme', urlParams.get('theme'));
+      }
     })();
   </script>
 
@@ -74,14 +90,11 @@ export async function handleHome(request) {
     }
     #lang-switch:hover { transform: scale(1.05); background: rgba(0,188,212,0.18); }
     section { content-visibility: auto; contain-intrinsic-size: 1px 500px; }
-    .skip-link { position: absolute; top: -40px; left: 0; background: #2a9d8f; color: white; padding: 8px; z-index: 2000; transition: top 0.3s; }
-    .skip-link:focus { top: 0; }
   </style>
 </head>
 
 <body>
 
-  <a href="#page-main" class="skip-link">Skip to content</a>
   <button id="lang-switch" aria-label="言語切替 / Language switch">🌐 English</button>
 
   <header>
@@ -294,7 +307,17 @@ export async function handleHome(request) {
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js');
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(reg => {
+              if (reg.installing) {
+                 // Force update if new worker is installing
+                 reg.installing.addEventListener('statechange', (e) => {
+                   if (e.target.state === 'installed' && navigator.serviceWorker.controller) {
+                     window.location.reload();
+                   }
+                 });
+              }
+            });
         });
       }
     })();
