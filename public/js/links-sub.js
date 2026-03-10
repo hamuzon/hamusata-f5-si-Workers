@@ -66,6 +66,7 @@ async function loadLinks() {
         img.src = image;
         img.alt = title;
         img.loading = "lazy";
+        img.className = "work-card-image"; // アスペクト比修正用のクラス
         img.decoding = "async";
         card.appendChild(img);
       }
@@ -111,8 +112,12 @@ async function loadLinks() {
         a.target = "_blank";
         a.rel = "noopener noreferrer";
 
-        a.innerHTML = langData[lang]["link_view"] || "View"; // innerHTML に変更
+        const viewText = langData[lang]["link_view"] || "View";
+        a.innerHTML = viewText;
         a.dataset.langKey = "link_view";
+        // アクセシビリティ改善: スクリーンリーダー向けにリンクの目的を明確にする
+        const h3Text = h3.textContent || title;
+        a.setAttribute("aria-label", `${h3Text} ${viewText.split('/')[0].trim()}`);
         card.appendChild(a);
       }
 

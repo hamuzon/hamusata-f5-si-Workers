@@ -133,7 +133,25 @@ export default {
     if (env.ASSETS && typeof env.ASSETS.fetch === 'function') {
       const assetResponse = await env.ASSETS.fetch(request);
       if (assetResponse.status !== 404) {
-        return assetResponse;
+        // 効率的なキャッシュ期間を設定
+        const newHeaders = new Headers(assetResponse.headers);
+        const url = new URL(request.url);
+        const fileExtension = url.pathname.split('.').pop().toLowerCase();
+
+        // ファイルタイプに基づいてCache-Controlを設定
+        // 画像やフォントは長期間キャッシュ
+        if (['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'ico', 'woff', 'woff2'].includes(fileExtension)) {
+          newHeaders.set('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+        // CSS, JSはバージョン管理されていることを期待し、少し長めに設定
+        else if (['css', 'js'].includes(fileExtension)) {
+          newHeaders.set('Cache-Control', 'public, max-age=604800'); // 1 week
+        }
+
+        return new Response(assetResponse.body, {
+          ...assetResponse,
+          headers: newHeaders,
+        });
       }
     }
 
