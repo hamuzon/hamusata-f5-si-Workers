@@ -20,8 +20,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+    padding: 0 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     transition: all 0.2s ease;
+    flex-direction: row;
 }
 
 .dark #menu-toggle {
@@ -49,6 +52,17 @@
 
 .dark .hamburger-line {
     background-color: #fff;
+}
+
+.menu-text {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #000;
+    line-height: 1;
+}
+
+.dark .menu-text {
+    color: #fff;
 }
 
 #menu-toggle:hover {

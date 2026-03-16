@@ -108,6 +108,7 @@ export async function handleHome(request) {
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
       </div>
+      <span class="menu-text" data-lang="menu">メニュー</span>
     </button>
 
     <nav id="mobile-menu" aria-label="Main navigation">
