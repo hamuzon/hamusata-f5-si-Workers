@@ -19,8 +19,6 @@ export async function handleCountdown(context) {
         copyrightContent = `&copy; ${yearDisplay} <a href="https://hamusata.f5.si" target="_blank" rel="noopener noreferrer">@hamusata</a>`;
     } else if (hostname.includes("hamuzon-jp.f5.si")) {
         copyrightContent = `&copy; ${yearDisplay} <a href="https://hamusata.f5.si" target="_blank" rel="noopener noreferrer">@hamuzon</a>`;
-    } else if (hostname.includes("hamuzon.web.fc2.com")) {
-        copyrightContent = `&copy; ${yearDisplay} <a href="https://hamuzon.web.fc2.com" target="_blank" rel="noopener noreferrer">@hamuzon</a>`;
     } else {
         copyrightContent = `&copy; ${yearDisplay} New Year Countdown`;
     }
