@@ -90,12 +90,90 @@ export async function handleHome(request) {
     }
     #lang-switch:hover { transform: scale(1.05); background: rgba(0,188,212,0.18); }
     section { content-visibility: auto; contain-intrinsic-size: 1px 500px; }
+    #pwa-install-card {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: min(92vw, 340px);
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(20,20,20,0.72);
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.28);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      z-index: 1200;
+      display: none;
+    }
+    #pwa-install-card.show { display: block; }
+    .pwa-install-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+    .pwa-install-image {
+      width: 72px;
+      height: 72px;
+      border-radius: 14px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.2);
+    }
+    .pwa-install-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .pwa-install-text {
+      margin: 0;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      opacity: 0.92;
+    }
+    .pwa-install-actions {
+      margin-top: 10px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .pwa-install-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      min-height: 38px;
+      font-weight: 700;
+    }
+    .pwa-install-btn.primary {
+      background: #00bcd4;
+      color: #062126;
+    }
+    .pwa-install-btn.secondary {
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+    }
   </style>
 </head>
 
 <body>
 
   <button id="lang-switch" aria-label="言語切替 / Language switch">🌐 English</button>
+  <aside id="pwa-install-card" aria-live="polite" aria-label="PWA install prompt">
+    <div class="pwa-install-content">
+      <img src="/icon_192.webp" alt="HAMUSATA app icon" class="pwa-install-image" width="72" height="72">
+      <div>
+        <p class="pwa-install-title">アプリとしてインストール</p>
+        <p class="pwa-install-text">このサイトをホーム画面へ追加して、すばやく開けます。</p>
+      </div>
+    </div>
+    <div class="pwa-install-actions">
+      <button type="button" id="pwa-install-dismiss" class="pwa-install-btn secondary">あとで</button>
+      <button type="button" id="pwa-install-trigger" class="pwa-install-btn primary">インストール</button>
+    </div>
+  </aside>
 
   <header>
     <a href="/" id="home" class="banner-link" aria-label="HAMUSATA ホームへ移動">
@@ -317,6 +395,45 @@ export async function handleHome(request) {
             });
         });
       }
+
+      const installCard = document.getElementById('pwa-install-card');
+      const installBtn = document.getElementById('pwa-install-trigger');
+      const dismissBtn = document.getElementById('pwa-install-dismiss');
+      const installStorageKey = 'pwa-install-card-dismissed-v1';
+      let deferredInstallPrompt = null;
+
+      if (dismissBtn && installCard) {
+        dismissBtn.addEventListener('click', () => {
+          localStorage.setItem(installStorageKey, '1');
+          installCard.classList.remove('show');
+        });
+      }
+
+      window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        deferredInstallPrompt = event;
+        if (localStorage.getItem(installStorageKey) !== '1' && installCard) {
+          installCard.classList.add('show');
+        }
+      });
+
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (!deferredInstallPrompt) return;
+          deferredInstallPrompt.prompt();
+          const { outcome } = await deferredInstallPrompt.userChoice;
+          if (outcome === 'accepted' && installCard) {
+            installCard.classList.remove('show');
+          }
+          deferredInstallPrompt = null;
+        });
+      }
+
+      window.addEventListener('appinstalled', () => {
+        if (installCard) {
+          installCard.classList.remove('show');
+        }
+      });
     })();
   </script>
 
