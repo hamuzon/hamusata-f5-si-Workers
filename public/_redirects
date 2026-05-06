@@ -50,4 +50,6 @@
 /lit  /?utm_source=litlink&utm_medium=social   302
 /tre  /?utm_source=linktree&utm_medium=social  302
 
-/sitemap.xml    https://home.hamusata.f5.si/public/hamusata.f5.si-sitemap.xml 301
+# ===== sitemap =====
+/sitemap.xml   https://home.hamusata.f5.si/public/hamusata.f5.si-sitemap.xml   301
+/sitemap       https://home.hamusata.f5.si/public/hamusata.f5.si-sitemap.xml   301
