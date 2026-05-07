@@ -1,8 +1,6 @@
 User-agent: *
 Allow: /
+Content-Signal: ai-train=no, search=yes, ai-input=no
 
 # Sitemap
 Sitemap: https://home.hamusata.f5.si/public/hamusata.f5.si-sitemap.xml
-
-# AI Content Usage Preferences (Content Signals)
-Content-Signal: ai-train=no, search=yes, ai-input=no

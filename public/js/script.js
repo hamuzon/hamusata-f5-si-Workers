@@ -117,9 +117,28 @@ document.querySelectorAll('.nav-home')
                   "Personal profile and links",
                   "Subscription/Service pages",
                   "New Year Countdown timer",
-                  "Agent-Ready discovery endpoints (.well-known)"
+                  "Agent-Ready discovery endpoints (.well-known)",
+                  "Scratch profile links (hamusata, hamuzon)"
                 ],
                 available_pages: ["/", "/sub", "/terms", "/countdown"]
+              };
+            }
+          },
+          {
+            name: "get_scratch_links",
+            description: "Returns links to @hamusata and @hamuzon's Scratch profiles.",
+            inputSchema: { type: "object", properties: {} },
+            execute: async () => {
+              return {
+                profiles: [
+                  { name: "hamusata", url: "https://scratch.mit.edu/users/hamusata" },
+                  { name: "hamuzon", url: "https://scratch.mit.edu/users/hamuzon" }
+                ],
+                internal_redirects: [
+                  { path: "/scratch", target: "hamusata" },
+                  { path: "/s", target: "hamusata" },
+                  { path: "/s-2", target: "hamuzon" }
+                ]
               };
             }
           }
