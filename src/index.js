@@ -131,7 +131,24 @@ export default {
           // 効率的なキャッシュ期間を設定
           const newHeaders = new Headers(assetResponse.headers);
           const url = new URL(request.url);
-          const fileExtension = url.pathname.split('.').pop().toLowerCase();
+          const pathname = url.pathname.toLowerCase();
+          const fileExtension = pathname.split('.').pop().toLowerCase();
+
+          // .well-known の JSON ファイルに対する Content-Type の強制設定
+          if (pathname.includes('/.well-known/')) {
+            const jsonFiles = [
+              'api-catalog',
+              'agent-skills',
+              'mcp/server-card',
+              'oauth-authorization-server',
+              'oauth-protected-resource',
+              'openid-configuration',
+              'jwks.json'
+            ];
+            if (jsonFiles.some(file => pathname.endsWith(file))) {
+              newHeaders.set('Content-Type', 'application/json; charset=utf-8');
+            }
+          }
 
           // ファイルタイプに基づいてCache-Controlを設定
           // 画像やフォントは長期間キャッシュ
