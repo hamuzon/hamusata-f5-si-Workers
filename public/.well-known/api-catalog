@@ -1,0 +1,43 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://my.hamusata.f5.si/",
+      "service-desc": [
+        {
+          "href": "https://my.hamusata.f5.si/lang/lang.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://my.hamusata.f5.si/.well-known/openid-configuration",
+          "type": "application/json"
+        },
+        {
+          "href": "https://my.hamusata.f5.si/.well-known/oauth-authorization-server",
+          "type": "application/json"
+        },
+        {
+          "href": "https://my.hamusata.f5.si/.well-known/oauth-protected-resource",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://github.com/hamuzon/hamusata-f5-si-Workers#readme",
+          "type": "text/html"
+        }
+      ],
+      "agent-skills": [
+        {
+          "href": "https://my.hamusata.f5.si/.well-known/agent-skills/index.json",
+          "type": "application/json"
+        }
+      ],
+      "mcp-server-card": [
+        {
+          "href": "https://my.hamusata.f5.si/.well-known/mcp/server-card.json",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

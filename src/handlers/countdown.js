@@ -35,6 +35,13 @@ export async function handleCountdown(context) {
 <meta property="og:description" content="来年 (${nextYear})年の元旦までの残り時間をリアルタイムでカウントダウン！">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
+
+<!-- Agent Discovery -->
+<link rel="api-catalog" href="/.well-known/api-catalog">
+<link rel="agent-skills" href="/.well-known/agent-skills/index.json">
+<link rel="mcp-server-card" href="/.well-known/mcp/server-card.json">
+<link rel="openid-configuration" href="/.well-known/openid-configuration">
+
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <style>
     * {
@@ -271,6 +278,35 @@ export async function handleCountdown(context) {
         setInterval(updateNowTime, 1000);
         updateCountdown();
         updateNowTime();
+
+        // ===== WebMCP Implementation =====
+        if (typeof navigator !== 'undefined' && navigator.modelContext && navigator.modelContext.provideContext) {
+          navigator.modelContext.provideContext({
+            tools: [
+              {
+                name: "get_countdown_time",
+                description: "Get the remaining time until the next year's New Year (January 1st).",
+                inputSchema: { type: "object", properties: {} },
+                execute: async () => {
+                  const now = new Date();
+                  const targetDate = new Date(now.getFullYear() + 1, 0, 1);
+                  const remaining = targetDate - now;
+
+                  const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+                  const hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
+                  const minutes = Math.floor((remaining / (1000 * 60)) % 60);
+                  const seconds = Math.floor((remaining / 1000) % 60);
+
+                  return {
+                    remaining: { days, hours, minutes, seconds },
+                    target_date: targetDate.toISOString(),
+                    message: "Remaining time: " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds."
+                  };
+                }
+              }
+            ]
+          });
+        }
     </script>
     <script>
         if ('serviceWorker' in navigator) {

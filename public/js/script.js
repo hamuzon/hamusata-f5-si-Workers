@@ -68,3 +68,85 @@ document.querySelectorAll('.nav-home')
     link.href = url.pathname + url.search + url.hash;
   });
 })();
+
+
+// ===== WebMCP Implementation =====
+(function() {
+  if (typeof navigator !== 'undefined' && navigator.modelContext && navigator.modelContext.provideContext) {
+    try {
+      navigator.modelContext.provideContext({
+        tools: [
+          {
+            name: "navigate_to",
+            description: "Navigate to a specific page on the site (home, sub, terms, countdown).",
+            inputSchema: {
+              type: "object",
+              properties: {
+                page: {
+                  type: "string",
+                  enum: ["home", "sub", "terms", "countdown"],
+                  description: "The page identifier to navigate to."
+                }
+              },
+              required: ["page"]
+            },
+            execute: async ({ page }) => {
+              const routes = {
+                home: "/",
+                sub: "/sub",
+                terms: "/terms",
+                countdown: "/countdown"
+              };
+              const target = routes[page] || "/";
+              window.location.href = target;
+              return { success: true, message: `Navigating to ${page}...` };
+            }
+          },
+          {
+            name: "get_site_info",
+            description: "Returns general information about this site, including available features and links.",
+            inputSchema: {
+              type: "object",
+              properties: {}
+            },
+            execute: async () => {
+              return {
+                site_name: "Hamusata Personal Site",
+                owner: "@hamusata",
+                features: [
+                  "Personal profile and links",
+                  "Subscription/Service pages",
+                  "New Year Countdown timer",
+                  "Agent-Ready discovery endpoints (.well-known)",
+                  "Scratch profile links (hamusata, hamuzon)"
+                ],
+                available_pages: ["/", "/sub", "/terms", "/countdown"]
+              };
+            }
+          },
+          {
+            name: "get_scratch_links",
+            description: "Returns links to @hamusata and @hamuzon's Scratch profiles.",
+            inputSchema: { type: "object", properties: {} },
+            execute: async () => {
+              return {
+                profiles: [
+                  { name: "hamusata", url: "https://scratch.mit.edu/users/hamusata" },
+                  { name: "hamuzon", url: "https://scratch.mit.edu/users/hamuzon" }
+                ],
+                internal_redirects: [
+                  { path: "/scratch", target: "hamusata" },
+                  { path: "/s", target: "hamusata" },
+                  { path: "/s-2", target: "hamuzon" }
+                ]
+              };
+            }
+          }
+        ]
+      });
+      console.log('WebMCP tools provided successfully.');
+    } catch (err) {
+      console.error('Failed to provide WebMCP context:', err);
+    }
+  }
+})();

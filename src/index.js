@@ -74,7 +74,7 @@ export default {
       // =================================================================
       // 2. Middleware Processing
       // =================================================================
-      const middlewareResponse = handleMiddleware(request);
+      const middlewareResponse = await handleMiddleware(request, env);
       if (middlewareResponse) {
         return middlewareResponse;
       }
@@ -105,8 +105,6 @@ export default {
         case '/countdown':
           return handleCountdown(request);
 
-        case '/yt':
-          return handleYt(request);
 
         case '/404':
           // Special handling: Return 404 page content with 200 OK status
@@ -122,10 +120,6 @@ export default {
           });
       }
 
-      // --- RickRoll Handler ---
-      if (pathname.startsWith('/r/')) {
-        return handleRickRoll(request);
-      }
 
 
       // =================================================================
@@ -137,7 +131,24 @@ export default {
           // 効率的なキャッシュ期間を設定
           const newHeaders = new Headers(assetResponse.headers);
           const url = new URL(request.url);
-          const fileExtension = url.pathname.split('.').pop().toLowerCase();
+          const pathname = url.pathname.toLowerCase();
+          const fileExtension = pathname.split('.').pop().toLowerCase();
+
+          // .well-known の JSON ファイルに対する Content-Type の強制設定
+          if (pathname.includes('/.well-known/')) {
+            const jsonFiles = [
+              'api-catalog',
+              'agent-skills',
+              'mcp/server-card',
+              'oauth-authorization-server',
+              'oauth-protected-resource',
+              'openid-configuration',
+              'jwks.json'
+            ];
+            if (jsonFiles.some(file => pathname.endsWith(file))) {
+              newHeaders.set('Content-Type', 'application/json; charset=utf-8');
+            }
+          }
 
           // ファイルタイプに基づいてCache-Controlを設定
           // 画像やフォントは長期間キャッシュ
@@ -188,6 +199,26 @@ export default {
       newHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
       newHeaders.set('Cross-Origin-Opener-Policy', 'same-origin');
       newHeaders.set('Cross-Origin-Embedder-Policy', 'require-corp');
+
+      // --- Agent Discovery Link Headers (Actual Data) ---
+      newHeaders.set('Link', [
+        '</.well-known/api-catalog>; rel="api-catalog"',
+        '</.well-known/agent-skills/index.json>; rel="agent-skills"',
+        '</.well-known/mcp/server-card.json>; rel="mcp-server-card"',
+        '</.well-known/openid-configuration>; rel="openid-configuration"',
+        '</.well-known/oauth-authorization-server>; rel="oauth-authorization-server"',
+        '</.well-known/oauth-protected-resource>; rel="oauth-protected-resource"'
+      ].join(', '));
+
+      // --- Content Negotiation Vary Header ---
+      const existingVary = newHeaders.get('Vary');
+      if (existingVary) {
+        if (!existingVary.toLowerCase().includes('accept')) {
+          newHeaders.set('Vary', existingVary + ', Accept');
+        }
+      } else {
+        newHeaders.set('Vary', 'Accept');
+      }
 
       return new Response(response.body, {
         status: response.status,

@@ -1,0 +1,10 @@
+{
+  "resource": "https://my.hamusata.f5.si/",
+  "authorization_servers": [
+    "https://my.hamusata.f5.si"
+  ],
+  "scopes_supported": [
+    "read",
+    "write"
+  ]
+}

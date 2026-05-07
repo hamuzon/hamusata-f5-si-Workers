@@ -11,6 +11,12 @@ export async function handleSub(request) {
   <link rel="icon" href="https://my.hamusata.f5.si/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="https://my.hamusata.f5.si/icon.png">
 
+  <!-- Agent Discovery -->
+  <link rel="api-catalog" href="/.well-known/api-catalog">
+  <link rel="agent-skills" href="/.well-known/agent-skills/index.json">
+  <link rel="mcp-server-card" href="/.well-known/mcp/server-card.json">
+  <link rel="openid-configuration" href="/.well-known/openid-configuration">
+
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#2a9d8f">
 

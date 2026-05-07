@@ -1,0 +1,16 @@
+{
+  "serverInfo": {
+    "name": "HAMUSATA Workers MCP Server",
+    "version": "1.0.0",
+    "description": "Exposes worker-based tools and routing metadata."
+  },
+  "capabilities": {
+    "tools": {
+      "listChanged": true
+    }
+  },
+  "transport": {
+    "type": "webmcp",
+    "url": "https://my.hamusata.f5.si/"
+  }
+}

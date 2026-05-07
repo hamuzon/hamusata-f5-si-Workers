@@ -1,0 +1,52 @@
+{
+  "skills": [
+    {
+      "name": "Markdown Negotiation",
+      "type": "negotiation",
+      "description": "Supports Accept: text/markdown to provide structured content for agents.",
+      "url": "https://my.hamusata.f5.si/",
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "name": "Countdown Utility",
+      "type": "utility",
+      "description": "Provides a countdown timer and event tracking interface.",
+      "url": "https://my.hamusata.f5.si/countdown",
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "name": "OAuth Discovery",
+      "type": "discovery",
+      "description": "Exposes OAuth/OIDC metadata for server discovery.",
+      "url": "https://my.hamusata.f5.si/.well-known/openid-configuration",
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "name": "WebMCP Tools",
+      "type": "interface",
+      "description": "Exposes browser-based tools for site navigation and Scratch profile discovery.",
+      "url": "https://my.hamusata.f5.si/",
+      "methods": ["WEBMCP"]
+    },
+    {
+      "name": "Content Signals",
+      "type": "policy",
+      "description": "Declares AI training and usage preferences in robots.txt.",
+      "url": "https://my.hamusata.f5.si/robots.txt",
+      "methods": ["GET"]
+    },
+    {
+      "name": "Scratch Profile Discovery",
+      "type": "utility",
+      "description": "Provides information and direct links to Scratch profiles.",
+      "url": "https://my.hamusata.f5.si/",
+      "methods": ["GET", "WEBMCP"]
+    }
+  ]
+}
