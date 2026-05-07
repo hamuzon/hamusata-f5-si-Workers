@@ -1,7 +1,7 @@
 # wrangler.toml
 name = 'hamusata-f5-si-workers'
 main = "src/index.js"
-compatibility_date = "2026-02-16"
+compatibility_date = "2026-05-07"
 
 [assets]
 directory = "./public"

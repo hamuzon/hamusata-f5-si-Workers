@@ -35,6 +35,13 @@ export async function handleCountdown(context) {
 <meta property="og:description" content="来年 (${nextYear})年の元旦までの残り時間をリアルタイムでカウントダウン！">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
+
+<!-- Agent Discovery -->
+<link rel="api-catalog" href="/.well-known/api-catalog">
+<link rel="agent-skills" href="/.well-known/agent-skills/index.json">
+<link rel="mcp-server-card" href="/.well-known/mcp/server-card.json">
+<link rel="openid-configuration" href="/.well-known/openid-configuration">
+
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <style>
     * {

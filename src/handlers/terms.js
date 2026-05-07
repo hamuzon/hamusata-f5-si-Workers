@@ -13,6 +13,12 @@ export async function handleTerms(request) {
   <link rel="icon" type="image/svg+xml" href="https://my.hamusata.f5.si/icon.svg">
   <link rel="apple-touch-icon" href="https://my.hamusata.f5.si/icon.png">
 
+  <!-- Agent Discovery -->
+  <link rel="api-catalog" href="/.well-known/api-catalog">
+  <link rel="agent-skills" href="/.well-known/agent-skills/index.json">
+  <link rel="mcp-server-card" href="/.well-known/mcp/server-card.json">
+  <link rel="openid-configuration" href="/.well-known/openid-configuration">
+
   <link rel="stylesheet" href="/css/style.css">
 
 <style>

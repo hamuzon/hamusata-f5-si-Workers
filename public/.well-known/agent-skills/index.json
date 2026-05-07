@@ -1,0 +1,31 @@
+{
+  "skills": [
+    {
+      "name": "Markdown Negotiation",
+      "type": "negotiation",
+      "description": "Supports Accept: text/markdown to provide structured content for agents.",
+      "url": "https://my.hamusata.f5.si/",
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "name": "Countdown Utility",
+      "type": "utility",
+      "description": "Provides a countdown timer and event tracking interface.",
+      "url": "https://my.hamusata.f5.si/countdown",
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "name": "OAuth Discovery",
+      "type": "discovery",
+      "description": "Exposes OAuth/OIDC metadata for server discovery.",
+      "url": "https://my.hamusata.f5.si/.well-known/openid-configuration",
+      "methods": [
+        "GET"
+      ]
+    }
+  ]
+}
