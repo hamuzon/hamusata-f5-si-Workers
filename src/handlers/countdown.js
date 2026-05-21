@@ -1,3 +1,4 @@
+import { createHtmlResponse } from '../utils/htmlResponse.js';
 export async function handleCountdown(context) {
     // 1. Parse Request & Hostname
     // Support both direct Request object and { request } context object
@@ -318,30 +319,5 @@ export async function handleCountdown(context) {
 </body>
 </html>`;
 
-    // 5. Handle ETag & Caching
-    const encoder = new TextEncoder();
-    const data = encoder.encode(html);
-    const hashBuffer = await crypto.subtle.digest('SHA-1', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const etag = `"${hashArray.map(b => b.toString(16).padStart(2, '0')).join('')}"`;
-
-    // Check If-None-Match
-    if (request.headers.get('If-None-Match') === etag) {
-        return new Response(null, {
-            status: 304,
-            headers: {
-                "ETag": etag,
-                "Cache-Control": "public, max-age=3600"
-            }
-        });
-    }
-
-    // Return 200 OK
-    return new Response(html, {
-        headers: {
-            "content-type": "text/html;charset=UTF-8",
-            "ETag": etag,
-            "Cache-Control": "public, max-age=3600"
-        },
-    });
+    return createHtmlResponse(request, html, { contentType: 'text/html;charset=UTF-8' });
 }
