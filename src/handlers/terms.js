@@ -1,3 +1,4 @@
+import { createHtmlResponse } from '../utils/htmlResponse.js';
 export async function handleTerms(request) {
   // 1. Define HTML Content
   const html = `<!DOCTYPE html>
@@ -257,27 +258,5 @@ export async function handleTerms(request) {
 </body>
 </html>`;
 
-  // 2. Generate ETag
-  const encoder = new TextEncoder();
-  const data = encoder.encode(html);
-  const hashBuffer = await crypto.subtle.digest('SHA-1', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const etag = `"${hashArray.map(b => b.toString(16).padStart(2, '0')).join('')}"`;
-
-  // 3. Check If-None-Match (304)
-  if (request.headers.get('If-None-Match') === etag) {
-    return new Response(null, {
-      status: 304,
-      headers: { "ETag": etag, "Cache-Control": "public, max-age=3600" }
-    });
-  }
-
-  // 4. Return 200 Response
-  return new Response(html, {
-    headers: {
-      "Content-Type": "text/html; charset=UTF-8",
-      "ETag": etag,
-      "Cache-Control": "public, max-age=3600"
-    },
-  });
+  return createHtmlResponse(request, html);
 }
