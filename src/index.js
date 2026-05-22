@@ -7,6 +7,7 @@ import { handleTerms } from './handlers/terms.js';
 import { handleError404 } from './handlers/error404.js';
 import { handleRedirects } from './handlers/redirects.js';
 import { handleYt } from './handlers/yt.js';
+import { handleDice } from './handlers/dice.js';
 
 export default {
   async fetch(request, env, ctx) {
@@ -62,7 +63,7 @@ export default {
 
       // --- Canonicalize specific single-page routes ---
       // e.g. /sub/ui, /countdown/ui, /404/ui -> base route
-      const singlePageRoutes = new Set(['/sub', '/countdown', '/404']);
+      const singlePageRoutes = new Set(['/sub', '/countdown', '/404', '/help']);
       const firstSegment = `/${pathname.split('/').filter(Boolean)[0] || ''}`;
 
       if (singlePageRoutes.has(firstSegment) && pathname !== firstSegment) {
@@ -104,6 +105,12 @@ export default {
 
         case '/countdown':
           return handleCountdown(request);
+
+        case '/api/dice':
+          return handleDice(request);
+
+        case '/help/api/dice':
+          return handleDice(request);
 
 
         case '/404':
