@@ -1,7 +1,7 @@
 // =================================================================
 // Configuration & Constants
 // =================================================================
-const ENABLED = 1; // 0 = OFF, 1 = ON, 2 = Domain Unification (Force Target Domain)
+const ENABLED = 0; // 0 = OFF, 2 = Domain Unification (Force Target Domain)
 const TARGET_DOMAIN = "my.hamusata.f5.si";
 
 const EXCLUDED_EXTENSIONS = new Set([
@@ -12,8 +12,6 @@ const EXCLUDED_EXTENSIONS = new Set([
     '.css', '.js', '.json',
     '.zip', '.rar', '.7z', '.tar', '.gz'
 ]);
-
-const BOT_REGEX = /bot|googlebot|bingbot|yandex|baidu|duckduckbot|slurp|ia_archiver/i;
 
 export async function handleMiddleware(request, env) {
     const url = new URL(request.url);
@@ -197,38 +195,6 @@ Requested Path: ${pathname}
         return null; // Already on target domain, skip further middleware
     }
 
-
-    // =================================================================
-    // Mode 1: Mobile/PC Redirect Logic
-    // =================================================================
-
-    // 3. Domain Scope Check
-    if (!hostname.endsWith(TARGET_DOMAIN)) {
-        return null;
-    }
-
-    // 4. Bot Detection (Skip redirects for bots)
-    const userAgent = request.headers.get("user-agent") || "";
-    if (BOT_REGEX.test(userAgent)) {
-        return null;
-    }
-
-    if (ENABLED === 1) {
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Opera Mini/i.test(userAgent);
-        const baseWithoutWWW = hostname.replace(/^www\./, "");
-        const hasM = baseWithoutWWW.startsWith("m.");
-        const pureBase = baseWithoutWWW.replace(/^m\./, "");
-
-        if (isMobile && !hasM) {
-            url.hostname = `www.m.${pureBase}`;
-            return Response.redirect(url.toString(), 302);
-        }
-
-        if (!isMobile && hasM) {
-            url.hostname = `www.${pureBase}`;
-            return Response.redirect(url.toString(), 302);
-        }
-    }
 
     return null;
 }
