@@ -203,7 +203,7 @@ copyBtn.addEventListener("click", () => {
 
   let redirectUrl;
   if (typeParam === "m") {
-    redirectUrl = isMobile ? `https://m.youtube.com/watch?v=${v}` : `https://music.youtube.com/watch?v=${v}`;
+    redirectUrl = `https://music.youtube.com/watch?v=${v}`;
   } else if (typeParam === "s") {
     redirectUrl = isMobile ? `https://m.youtube.com/shorts/${v}` : `https://www.youtube.com/shorts/${v}`;
   } else {
