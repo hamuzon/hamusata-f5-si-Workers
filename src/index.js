@@ -12,6 +12,13 @@ export default {
   async fetch(request, env, ctx) {
     const handleRequest = async (request, env, ctx) => {
       const url = new URL(request.url);
+
+      // --- Remove trailing dot from hostname (e.g. example.com. -> example.com) ---
+      if (url.hostname.endsWith('.')) {
+        url.hostname = url.hostname.slice(0, -1);
+        return Response.redirect(url.toString(), 301);
+      }
+
       let pathname = url.pathname.toLowerCase();
 
       // =================================================================
