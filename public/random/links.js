@@ -1,5 +1,4 @@
 const links = [
-    "https://app.hamusata.f5.si/",
     "https://bin2dec.hamusata.f5.si",
     "https://Calculator.hamusata.f5.si",
     "https://calendar.hamusata.f5.si",
@@ -11,7 +10,6 @@ const links = [
     "https://dice.hamusata.f5.si",
     "https://discord-tools.hamusata.f5.si/",
     "https://editor.hamusata.f5.si/",
-    "https://exe.hamusata.f5.si/",
     "https://expo.hamusata.f5.si/",
     "https://expo2025-counter.hamusata.f5.si",
     "https://go-link-s.hamusata.f5.si/",
@@ -19,7 +17,6 @@ const links = [
     "https://google.hamusata.f5.si/",
     "https://hamusata.f5.si/",
     "https://hamusata.hamusata.f5.si/",
-    "https://hello-world.hamusata.f5.si/",
     "https://home.hamusata.f5.si/",
     "https://l.hamusata.f5.si/",
     "https://link.hamusata.f5.si",
