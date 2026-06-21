@@ -126,7 +126,7 @@ export async function handleHome(request) {
         <li><a href="#status" data-lang="nav_status">サービス稼働状況</a></li>
         <li><a href="#mutual-links" data-lang="nav_links">相互リンク</a></li>
         <li><a href="#sns" data-lang="nav_sns">SNSリンク</a></li>
-        <li><a href="/terms" data-lang="nav_terms">利用規約・プライバシーポリシー</a></li>
+        <li><a href="/terms-and-privacy" data-lang="nav_terms">利用規約・プライバシーポリシー</a></li>
         <li>
           <a href="https://github.com/hamuzon/hamusata-f5-si-Workers" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:6px;">
             <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
