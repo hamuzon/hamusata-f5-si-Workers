@@ -106,7 +106,7 @@ export default {
         case '/sub':
           return handleSub(request);
 
-        case '/terms':
+        case '/terms-and-privacy':
           return handleTerms(request);
 
         case '/countdown':
