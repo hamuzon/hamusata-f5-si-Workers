@@ -3,7 +3,7 @@ import { handleCountdown } from './handlers/countdown.js';
 import { handleRickRoll } from './handlers/rickroll.js';
 import { handleHome } from './handlers/home.js';
 import { handleSub } from './handlers/sub.js';
-import { handleTerms } from './handlers/terms.js';
+import { handleTerms } from './handlers/terms-and-privacy.js';
 import { handleError404 } from './handlers/error404.js';
 import { handleRedirects } from './handlers/redirects.js';
 import { handleYt } from './handlers/yt.js';
