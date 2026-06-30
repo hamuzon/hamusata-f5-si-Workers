@@ -1,6 +1,6 @@
 # ===== X / Twitter =====
 /x           https://x.com/hamu_sata   301
-/x-1         https://x.com/i/user/1797783565670952960  301
+/x-1         https://x.com/hamu_sata  301
 /twt         https://x.com/hamu_sata   301
 /twitter     https://x.com/hamu_sata   301
 /twitter-1   https://x.com/i/user/1797783565670952960   301
@@ -44,6 +44,7 @@
 /mutual_Links   /links   301
 /mutual_Links/  /links   301
 /terms /terms-and-privacy 301
+/privacy /terms-and-privacy 301
 
 # ===== Social Analytics =====
 /dc   /?utm_source=discord&utm_medium=social   302
