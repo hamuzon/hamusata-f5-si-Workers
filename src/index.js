@@ -189,7 +189,7 @@ export default {
 
       const csp = [
         "default-src 'self'",
-        "script-src 'self' 'unsafe-inline' https://docs.google.com https://www.googletagmanager.com",
+        "script-src 'self' 'unsafe-inline' https://docs.google.com https://www.googletagmanager.com https://cdnjs.cloudflare.com",
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
         "font-src 'self' https://fonts.gstatic.com",
         "img-src 'self' data: https: *.googleusercontent.com i.imgur.com",
