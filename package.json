@@ -4,7 +4,7 @@
   "description": "hamusata の個人サイトです。  \r This is the personal website of hamusata.",
   "main": "index.js",
   "devDependencies": {
-    "wrangler": "^4.107.0"
+    "wrangler": "^4.110.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
