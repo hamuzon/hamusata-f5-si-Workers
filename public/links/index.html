@@ -4,30 +4,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HAMUSATA – 相互リンク / Mutual Links</title>
+<meta name="description" content="HAMUSATAの相互リンク / Mutual Linksページです。相互リンクの一覧を掲載しています。 / This is the HAMUSATA Mutual Links page, featuring a list of mutual links.">
 
-<link rel="icon" href="https://my.hamusata.f5.si/favicon.ico" sizes="any">
-<link rel="icon" href="https://my.hamusata.f5.si/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="https://my.hamusata.f5.si/icon.png">
+  <link rel="icon" href="https://hamusata.f5.si/favicon.ico" sizes="any">
+<link rel="icon" href="https://hamusata.f5.si/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="https://hamusata.f5.si/icon.png">
+<link rel="manifest" href="/manifest.json">
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Zen+Maru+Gothic&display=swap" rel="stylesheet">
 
-<!-- 外部CSS -->
-<link rel="stylesheet" href="../css/style-links.css">
+<style>
+  :root { --bg-color: #f7eaff; --text-color: #000; }
+  :root.dark { --bg-color: #0a0a0a; --text-color: #fff; }
+  html, body { background-color: var(--bg-color); color: var(--text-color); }
+</style>
+
+<script>
+  (function(){
+    const tp = new URLSearchParams(window.location.search).get('theme');
+    const theme = tp || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.className = theme;
+  })();
+</script>
+
+<link rel="stylesheet" href="../css/style-links.css" />
 </head>
 
-<body class="light">
+<body>
+<script>
+  (function(){
+    const theme = document.documentElement.className;
+    document.body.className = theme;
+  })();
+</script>
 
 <header>
-    <a href="../" class="banner-link">
-        <img src="../hamusata.webp" alt="hamusata ホームバナー / hamusata home banner">
+    <a href="https://www.hamusata.f5.si" class="banner-link">
+        <img src="../hamusata.webp" alt="hamusata ホームバナー / hamusata home banner" width="399" height="120">
     </a>
 </header>
 
 <section>
     <h2>相互リンク / Mutual Links</h2>
 
-    <!-- スプレッドシートから動的にカードを読み込み -->
+    <!-- スプレッドシートからCardを読み込み -->
     <div class="works" id="mutualLinks">
         <p>読み込み中… / Loading…</p>
     </div>
@@ -35,12 +56,10 @@
 
 <footer>
     &copy; <span id="year"></span> 
-    <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – All rights reserved.
-    <br>
-    <a href="../">ホームページに戻る / Back to Home</a>
+    <a href="https://github.com/hamuzon">@hamuzon / @hamusata</a> – All rights reserved. |
+    <a href="../index.html">ホームページに戻る / Back to Home</a>
 </footer>
 
-<!-- 外部JS -->
 <script src="../js/style-links.js"></script>
 
 </body>
