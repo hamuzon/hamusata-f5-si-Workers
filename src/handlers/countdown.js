@@ -14,9 +14,7 @@ export async function handleCountdown(context) {
 
     // 3. Determine Copyright Text based on Hostname
     let copyrightContent = "";
-    if (hostname === "hamuzon.github.io") {
-        copyrightContent = `&copy; ${yearDisplay} <a href="https://hamuzon.github.io" target="_blank" rel="noopener noreferrer">@hamuzon</a>`;
-    } else if (hostname.includes("hamusata.f5.si")) {
+    if (hostname.includes("hamusata.f5.si")) {
         copyrightContent = `&copy; ${yearDisplay} <a href="https://hamusata.f5.si" target="_blank" rel="noopener noreferrer">@hamusata</a>`;
     } else if (hostname.includes("hamuzon-jp.f5.si")) {
         copyrightContent = `&copy; ${yearDisplay} <a href="https://hamusata.f5.si" target="_blank" rel="noopener noreferrer">@hamuzon</a>`;
@@ -37,14 +35,34 @@ export async function handleCountdown(context) {
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 
+<meta name="twitter:card" content="summary">
+
 <!-- Agent Discovery -->
 <link rel="api-catalog" href="/.well-known/api-catalog">
 <link rel="agent-skills" href="/.well-known/agent-skills/index.json">
 <link rel="mcp-server-card" href="/.well-known/mcp/server-card.json">
 <link rel="openid-configuration" href="/.well-known/openid-configuration">
 
+<script>
+    const theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.className = theme;
+</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
+    html {
+        background: #0a0a0a;
+    }
+
+    html.light {
+        background: #fde2ea;
+    }
+
+    html.dark {
+        background: #0a0a0a;
+    }
+
     * {
         margin: 0;
         padding: 0;
@@ -200,10 +218,6 @@ export async function handleCountdown(context) {
         gap: 1rem;
     }
 </style>
-<script>
-    const theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    document.documentElement.className = theme;
-</script>
 </head>
 <body>
     <header>
