@@ -292,6 +292,12 @@ export async function handleHome(request) {
         <a href="/bluesky" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
+      <div class="work-card">
+          <img src="/icon.webp" alt="Twitter(X) icon" loading="lazy" decoding="async">
+          <h3 data-lang="sns_x_title">Twitter (X)</h3>
+          <p data-lang="sns_x_desc">@hamu_sata アカウント</p>
+          <a href="/x" data-lang="link_view">見る</a>
+        </div>
     </div>
   </section>
   </main>
