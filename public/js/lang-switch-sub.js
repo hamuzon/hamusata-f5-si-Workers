@@ -40,7 +40,10 @@ function initSubLang() {
   const browserLang = navigator.language.startsWith("en") ? "en" : "ja";
   const lang = saved || browserLang;
 
-  loadSubLang(lang);
+  // ページ読み込み後に翻訳
+  window.addEventListener("DOMContentLoaded", () => {
+    loadSubLang(lang);
+  });
 
   const btn = document.getElementById("lang-switch");
   if (btn) {
