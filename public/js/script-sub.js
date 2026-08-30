@@ -1,9 +1,6 @@
 // ============================================
-// js/script-sub.js 
+// js/script-sub.js
 // ============================================
-
-let currentLang = localStorage.getItem("lang") || "ja";
-let langSub = {};
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -15,39 +12,57 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el) el.textContent = now > baseYear ? `${baseYear}~${now}` : `${baseYear}`;
   })();
 
-  // テーマ自動切替
-  (function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const themeParam = urlParams.get('theme');
-
-    if (themeParam === 'dark' || themeParam === 'light') {
-      document.body.className = themeParam;
-    } else {
-      function applyTheme() {
-        document.body.className = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      applyTheme();
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
-    }
-  })();
+  if (!new URLSearchParams(window.location.search).has('theme')) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      document.documentElement.className = e.matches ? 'dark' : 'light';
+    });
+  }
 
   // ハンバーガーメニュー開閉
   (function () {
     const menuToggle = document.getElementById('menu-toggle');
     const menuOverlay = document.getElementById('menu-overlay');
+    const mobileMenu = document.getElementById('mobile-menu');
     const body = document.body;
+    let isAnimating = false;
+
+    function closeMenu() {
+      body.classList.remove('menu-open');
+      if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function openMenu() {
+      body.classList.add('menu-open');
+      if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
+    }
 
     if (menuToggle) {
-      menuToggle.addEventListener('click', () => {
-        const open = body.classList.toggle('menu-open');
-        menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (isAnimating) return;
+        isAnimating = true;
+        const isOpen = body.classList.contains('menu-open');
+        isOpen ? closeMenu() : openMenu();
+        setTimeout(() => { isAnimating = false; }, 400);
       });
     }
 
     if (menuOverlay) {
-      menuOverlay.addEventListener('click', () => {
-        body.classList.remove('menu-open');
-        if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+      menuOverlay.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeMenu();
+      });
+    }
+
+    if (mobileMenu) {
+      mobileMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          closeMenu();
+        });
       });
     }
   })();
@@ -65,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.nav-home').forEach(el => el.addEventListener('click', menuScrollToHome));
   })();
 
-  // PWA: Service Worker 登録
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/service-worker.js')

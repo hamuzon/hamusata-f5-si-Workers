@@ -4,7 +4,7 @@
 
 async function loadSubLang(lang) {
   try {
-    // sub-lang.json を取得
+    // sub-lang.json 取得
     const res = await fetch("/lang/sub-lang.json");
     const data = await res.json();
     const text = data[lang] || data["ja"];
@@ -14,29 +14,26 @@ async function loadSubLang(lang) {
       return;
     }
 
-    // data-lang / data-lang-key の要素を書き換え
     document.querySelectorAll("[data-lang], [data-lang-key]").forEach(el => {
       const key = el.dataset.lang || el.dataset.langKey;
       if (key && text[key]) {
-        // HTMLタグも含む場合は innerHTML に置き換え
         el.innerHTML = text[key];
       }
     });
 
-    // HTML lang 属性更新
     document.documentElement.lang = lang;
 
     // 言語切替ボタン表示
     const btn = document.getElementById("lang-switch");
     if (btn) btn.textContent = lang === "ja" ? "🌐 English" : "🌐 日本語";
 
-    // 現在の言語を記憶
     localStorage.setItem("lang", lang);
 
   } catch (e) {
     console.error("sub-lang.json 読み込みエラー:", e);
   }
 }
+
 
 function initSubLang() {
   const saved = localStorage.getItem("lang");
@@ -48,7 +45,6 @@ function initSubLang() {
     loadSubLang(lang);
   });
 
-  // ボタンクリックで切替
   const btn = document.getElementById("lang-switch");
   if (btn) {
     btn.addEventListener("click", async () => {
@@ -59,5 +55,4 @@ function initSubLang() {
   }
 }
 
-// 初期化
 initSubLang();
