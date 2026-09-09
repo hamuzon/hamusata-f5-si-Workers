@@ -118,7 +118,7 @@ const links = [
     "https://hamuzon-jp.f5.si/passapi/",
     "https://hamuzon-jp.f5.si/password/",
     "https://hamuzon-jp.f5.si/pixel-art/",
-    "https://hamuzon-jp.f5.si/qr/",
+    "https://qr.hamuzon-jp.f5.si/",
     "https://hamuzon-jp.f5.si/task-board/",
     "https://hamuzon-jp.f5.si/text/",
     "https://hamuzon-jp.f5.si/Time-Zone_app/",
