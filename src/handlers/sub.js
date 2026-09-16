@@ -51,7 +51,18 @@ export async function handleSub(request) {
 <meta name="twitter:description" content="HAMUSATA.f5.si のホームページです / This is the homepage of HAMUSATA.f5.si">
 <meta name="twitter:image" content="https://hamusata.f5.si/logo.webp">
 
+  <script>
+    (function () {
+      var tp = new URLSearchParams(window.location.search).get('theme');
+      var theme = (tp === 'dark' || tp === 'light') ? tp
+        : (localStorage.getItem('site-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+      document.documentElement.className = theme;
+    })();
+  </script>
+
 <style>
+  html.light { background-color: #f7eaff; }
+  html.dark { background-color: #0a0a0a; }
   * { box-sizing: border-box; overflow-wrap: break-word; }
   #lang-switch {
     position: fixed;
@@ -84,7 +95,7 @@ export async function handleSub(request) {
 </style>
 
 </head>
-<body class="light">
+<body>
 
 <button id="lang-switch">🌐 English</button>
 
