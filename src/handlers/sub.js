@@ -71,7 +71,7 @@ export async function handleSub(request) {
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     line-height: 1;
   }
-  body.dark #lang-switch {
+  html.dark #lang-switch, body.dark #lang-switch, .dark #lang-switch {
     background: rgba(0,0,0,0.35);
     color: #fff;
     border: 1px solid rgba(255,255,255,0.12);

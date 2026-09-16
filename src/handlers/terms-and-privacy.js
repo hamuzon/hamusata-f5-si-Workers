@@ -18,12 +18,23 @@ export async function handleTerms(request) {
   <link rel="api-catalog" href="/.well-known/api-catalog">
   <link rel="agent-skills" href="/.well-known/agent-skills/index.json">
   <link rel="mcp-server-card" href="/.well-known/mcp/server-card.json">
-  <link rel="openid-configuration" href="/.well-known/openid-configuration">
+  <script>
+    (function () {
+      var tp = new URLSearchParams(window.location.search).get('theme');
+      var theme = (tp === 'dark' || tp === 'light') ? tp
+        : (localStorage.getItem('site-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+      document.documentElement.className = theme;
+    })();
+  </script>
 
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/foldable.css">
+  <link rel="stylesheet" href="/css/dark.css" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="/css/light.css" media="(prefers-color-scheme: light)">
 
 <style>
+  html.light { background-color: #f7eaff; }
+  html.dark { background-color: #0a0a0a; }
   :root { --terms-timestamp: 1771218000; /* 指定日 */ }
   * { box-sizing: border-box; overflow-wrap: break-word; }
   a { overflow-wrap: anywhere; word-break: break-word; }
@@ -45,7 +56,7 @@ export async function handleTerms(request) {
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
-  body.dark #lang-switch {
+  html.dark #lang-switch, body.dark #lang-switch, .dark #lang-switch {
     background: rgba(0,0,0,0.35);
     color: #fff;
     border: 1px solid rgba(255,255,255,0.2);
