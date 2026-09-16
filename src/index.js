@@ -69,7 +69,7 @@ export default {
 
       // --- Canonicalize specific single-page routes ---
       // e.g. /sub/ui, /countdown/ui, /404/ui -> base route
-      const singlePageRoutes = new Set(['/sub', '/countdown', '/404']);
+      const singlePageRoutes = new Set(['/sub', '/countdown', '/404', '/yt']);
       const firstSegment = `/${pathname.split('/').filter(Boolean)[0] || ''}`;
 
       if (singlePageRoutes.has(firstSegment) && pathname !== firstSegment) {
@@ -105,6 +105,9 @@ export default {
 
         case '/sub':
           return handleSub(request);
+
+        case '/yt':
+          return handleYt(request);
 
         case '/terms-and-privacy':
           return handleTerms(request);
