@@ -5,7 +5,7 @@ export async function handleError404(request) {
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>404 Not Found / ページが見つかりません</title>
 
   <link rel="icon" href="https://my.hamusata.f5.si/favicon.ico" sizes="any">
@@ -23,6 +23,7 @@ export async function handleError404(request) {
   <meta name="theme-color" content="#2a9d8f">
 
   <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/foldable.css">
 
   <style>
     * {
@@ -251,6 +252,7 @@ export async function handleError404(request) {
 
     document.addEventListener("DOMContentLoaded", initLang);
   </script>
+  <script src="/js/foldable.js"></script>
 
   <script>
     if ('serviceWorker' in navigator) {

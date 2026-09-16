@@ -76,29 +76,7 @@ export async function handleHome(request) {
   </script>
 
   <style>
-    * { box-sizing: border-box; overflow-wrap: break-word; }
     .preloading *, .preloading { transition: none !important; }
-    #lang-switch {
-      position: fixed;
-      top: max(20px, calc(env(safe-area-inset-top, 0px) + 14px));
-      left: max(20px, calc(env(safe-area-inset-left, 0px) + 16px));
-      right: auto;
-      padding: 0.55rem 1rem;
-      min-height: 44px;
-      font-size: 0.9rem;
-      border-radius: 14px;
-      border: 1px solid rgba(0,0,0,0.2);
-      background: rgba(255,255,255,0.25);
-      -webkit-backdrop-filter: blur(16px);
-      backdrop-filter: blur(16px);
-      cursor: pointer;
-      z-index: 1002;
-      transition: all 0.18s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      line-height:1;
-    }
-    #lang-switch:hover { transform: scale(1.05); background: rgba(0,188,212,0.18); }
-    section { content-visibility: auto; contain-intrinsic-size: 1px 500px; }
   </style>
 </head>
 

@@ -5,7 +5,7 @@ export async function handleTerms(request) {
 <html lang="ja-en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>利用規約・プライバシーポリシー / Terms of Service & Privacy Policy – HAMUSATA</title>
 
   <link rel="icon" href="https://my.hamusata.f5.si/favicon.ico" sizes="any">
@@ -21,6 +21,7 @@ export async function handleTerms(request) {
   <link rel="openid-configuration" href="/.well-known/openid-configuration">
 
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/foldable.css">
 
 <style>
   :root { --terms-timestamp: 1771218000; /* 指定日 */ }
@@ -29,18 +30,20 @@ export async function handleTerms(request) {
 
   #lang-switch {
     position: fixed;
-    top: 16px;
-    left: 16px; 
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
-    border-radius: 12px;
+    top: max(20px, calc(env(safe-area-inset-top, 0px) + 14px));
+    left: max(20px, calc(env(safe-area-inset-left, 0px) + 16px));
+    right: auto;
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 14px;
     border: 1px solid rgba(0,0,0,0.2);
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.25);
     -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     cursor: pointer;
-    z-index: 1001;
+    z-index: 1002;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
   body.dark #lang-switch {
     background: rgba(0,0,0,0.35);
@@ -246,6 +249,7 @@ export async function handleTerms(request) {
       setLanguage(nextLang);
     });
   </script>
+  <script src="/js/foldable.js"></script>
 
   <script>
     if ('serviceWorker' in navigator) {
