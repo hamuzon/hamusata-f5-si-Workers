@@ -5,8 +5,8 @@
 ========================= */
 #menu-toggle {
     position: fixed;
-    top: 16px;
-    right: 16px;
+    top: max(20px, calc(env(safe-area-inset-top, 0px) + 14px));
+    right: max(20px, calc(env(safe-area-inset-right, 0px) + 18px));
     width: auto;
     min-width: 80px; /* Restore horizontal width */
     height: 48px;
@@ -94,7 +94,9 @@ body.menu-open .hamburger-line:nth-child(3) {
     width: 75%;
     max-width: 320px;
     height: 100vh;
-    padding-top: 80px;
+    padding-top: max(95px, calc(env(safe-area-inset-top, 0px) + 80px));
+    padding-right: max(12px, calc(env(safe-area-inset-right, 0px) + 10px));
+    padding-bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 16px));
     border-radius: 16px 0 0 16px;
     overflow-y: auto;
     z-index: 1000;
