@@ -48,6 +48,16 @@ const urlsToCache = [
   '/icon_800.avif',
   '/icon_800.webp',
 
+  '/Image/sns/bluesky_media_kit_logo_transparent_1.svg',
+  '/Image/sns/bluesky_media_kit_logo_transparent_2.svg',
+  '/Image/sns/bluesky_media_kit_logo_transparent_3.svg',
+  '/Image/sns/bluesky_media_kit_logo_transparent_4.svg',
+  '/Image/sns/GitHub_Invertocat_Black.png',
+  '/Image/sns/GitHub_Invertocat_White.png',
+  '/Image/sns/x_logo-black.png',
+  '/Image/sns/x_logo-white.png',
+  '/Image/sns/x_logo.svg',
+
   '/css/dark.css',
   '/css/dark-hc.css',
   '/css/dark-mc.css',
@@ -94,8 +104,15 @@ const urlsToCache = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then(async cache => {
+      for (const url of urlsToCache) {
+        try {
+          await cache.add(url);
+        } catch (e) {
+          console.warn('[ServiceWorker] Failed to cache:', url, e);
+        }
+      }
+    }).then(() => self.skipWaiting())
   );
 });
 
@@ -112,41 +129,36 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+
   if (event.request.method !== 'GET') return;
 
-  const url = new URL(event.request.url);
-  const isNavigation = event.request.mode === 'navigate';
-
-  if (isNavigation) {
-    // Navigation: Network First but with a fix for theme params
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          const cloned = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, cloned));
-          return response;
-        })
-        .catch(() => {
-          // If offline, try to match the exact URL (with params) first, then fallback to '/'
-          return caches.match(event.request).then(response => {
-            return response || caches.match('/');
-          });
-        })
-    );
-  } else {
-    // Assets: Cache First, but Network update if possible
-    event.respondWith(
-      caches.match(event.request).then(cached => {
-        const fetchPromise = fetch(event.request).then(networkResponse => {
-          if (networkResponse && networkResponse.status === 200) {
-            const cloned = networkResponse.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, cloned));
-          }
+  event.respondWith(
+    fetch(event.request)
+      .then(networkResponse => {
+        if (!networkResponse || networkResponse.status !== 200) {
           return networkResponse;
-        }).catch(() => null);
+        }
 
-        return cached || fetchPromise;
+        const responseToCache = networkResponse.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          try {
+            cache.put(event.request, responseToCache);
+          } catch (e) {
+            console.warn('[ServiceWorker] cache.put failed:', event.request.url, e);
+          }
+        });
+        return networkResponse;
       })
-    );
-  }
+      .catch(() => {
+        return caches.match(event.request).then(cachedResponse => {
+          if (cachedResponse) return cachedResponse;
+
+          if (event.request.destination === 'image') {
+            return caches.match('/icon.webp');
+          } else if (event.request.destination === 'document') {
+            return caches.match('/');
+          }
+        });
+      })
+  );
 });

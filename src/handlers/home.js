@@ -276,35 +276,35 @@ export async function handleHome(request) {
     <div class="works">
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="Scratch icon" loading="lazy" decoding="async" width="158" height="105">
         <h3 data-lang="sns_scratch1_title">Scratch</h3>
         <p data-lang="sns_scratch1_desc">hamusataアカウント</p>
         <a href="/s" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="Scratch icon" loading="lazy" decoding="async" width="158" height="105">
         <h3 data-lang="sns_scratch2_title">Scratch</h3>
         <p data-lang="sns_scratch2_desc">hamuzonアカウント</p>
         <a href="/s-2" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/Image/sns/GitHub_Invertocat_Black.png" alt="GitHub icon" loading="lazy" decoding="async" width="158" height="105">
         <h3 data-lang="sns_github_title">GitHub</h3>
         <p data-lang="sns_github_desc">GitHubアカウント</p>
         <a href="/github" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/Image/sns/bluesky_media_kit_logo_transparent_2.svg" alt="Bluesky icon" loading="lazy" decoding="async" width="158" height="105">
         <h3 data-lang="sns_bsky_title">Bluesky</h3>
         <p data-lang="sns_bsky_desc">Blueskyアカウント</p>
         <a href="/bluesky" target="_blank" rel="noopener noreferrer" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-          <img src="/icon.webp" alt="Twitter(X) icon" loading="lazy" decoding="async">
+          <img src="/Image/sns/x_logo.svg" alt="Twitter(X) icon" loading="lazy" decoding="async">
           <h3 data-lang="sns_x_title">Twitter (X)</h3>
           <p data-lang="sns_x_desc">@hamu_sata アカウント</p>
           <a href="/x" data-lang="link_view">見る</a>
