@@ -10,7 +10,7 @@ export async function handleHome(request) {
 
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/icon.png" sizes="32x32">
-  <link rel="icon" type="image/webp" href="/icon.webp" sizes="32x32">
+  <link rel="icon" type="image/webp" href="/icon_120.webp" sizes="32x32">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icon.png">
   
@@ -168,49 +168,49 @@ export async function handleHome(request) {
     <div class="works">
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_main_title">HAMUSATA – ホームページ</h3>
         <p data-lang="w_main_desc">メインのポータルリンク。色々なものをまとめています。</p>
         <a href="https://home.hamusata.f5.si" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_github_pages_title">GitHub版 – ホームページ</h3>
         <p data-lang="w_github_pages_desc">GitHub Pages 版ホームページ。</p>
         <a href="https://hamuzon.github.io" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_hamuzon_title">hamuzon – ホームページ</h3>
         <p data-lang="w_hamuzon_desc">hamuzon-jp.f5.si のホームページ・リンクポータル版 (fc2の一部コピーサイト)</p>
         <a href="https://hamuzon-jp.f5.si/" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_fc2_title">hamuzon (FC2)系 – ホームページ</h3>
         <p data-lang="w_fc2_desc">FC2版ホームページ。いろんなコードやコンテンツがあります。</p>
         <a href="https://hamuzon.web.fc2.com/" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_link_s_title">link-s.f5.si – ショートカットリンクサービス</h3>
         <p data-lang="w_link_s_desc">短縮URL・ショートカットリンクサービス。</p>
         <a href="https://link-s.f5.si" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_go_link_title">go.link-s.f5.si – カスタムパス対応版</h3>
         <p data-lang="w_go_link_desc">任意のパスで短縮リンクを作れるカスタムリンクサービス。</p>
         <a href="https://go.link-s.f5.si" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_pw_title">pw.link-s.f5.si – パスワード生成サービス</h3>
         <p data-lang="w_pw_desc">APIベースのパスワード生成サービス。ログ保存等は一切ありません。</p>
         <a href="https://pw.link-s.f5.si" data-lang="link_view">見る</a>
@@ -219,14 +219,14 @@ export async function handleHome(request) {
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_www_title">www.link-s.f5.si</h3>
         <p data-lang="w_www_desc">リンクのメイン機能はショートカットリンクサービスのlink-s.f5.si 系列作品集一覧。</p>
         <a href="https://www.link-s.f5.si/" data-lang="link_view">見る</a>
       </div>
 
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="w_terms_title">利用規約・プライバシーポリシー</h3>
         <p data-lang="w_terms_desc">サイト利用規約とプライバシーポリシーの確認はこちら。</p>
         <a href="/terms" data-lang="link_view">確認する</a>
@@ -239,7 +239,7 @@ export async function handleHome(request) {
     <h2 data-lang="random_title">ランダム作品</h2>
     <div class="works">
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="random_card_title">ランダム作品</h3>
         <p data-lang="random_card_desc">作品をランダムに開くボタンです。</p>
         <a href="/random" data-lang="link_open">開く</a>
@@ -251,7 +251,7 @@ export async function handleHome(request) {
     <h2 data-lang="status_title">サービス稼働状況 / Status Page</h2>
     <div class="works">
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="status_card_title">サービス稼働状況</h3>
         <p data-lang="status_note">セキュリティ設定変更などにより、監視ツールがサイトにアクセスできず落ちた判定となる場合があります。実際の状態と異なる可能性がありますので、参考としてご確認ください。</p>
         <a href="https://stats.uptimerobot.com/tT7bs2uEHa" data-lang="link_view">稼働状況を見る</a>
@@ -263,7 +263,7 @@ export async function handleHome(request) {
     <h2 data-lang="mutual_title">相互リンク / Mutual Links</h2>
     <div class="works">
       <div class="work-card">
-        <img src="/icon.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
+        <img src="/icon_120.webp" alt="icon" loading="lazy" decoding="async" width="80" height="80">
         <h3 data-lang="mutual_card_title">相互リンクページ</h3>
         <p data-lang="mutual_card_desc">こちらをクリックすると相互リンクページに移動します。</p>
         <a href="/links" data-lang="link_open">開く</a>
