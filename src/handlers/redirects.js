@@ -41,7 +41,7 @@ export function handleRedirects(request, normalizedPath) {
     // 2. Lookup Redirect Target
     const target = REDIRECTS.get(lookupPath);
     if (target) {
-        return Response.redirect(new URL(target, request.url).toString(), 301);
+        return Response.redirect(new URL(target, request.url).toString(), 308);
     }
     return null;
 }
