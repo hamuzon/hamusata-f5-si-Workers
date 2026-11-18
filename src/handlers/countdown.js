@@ -1,5 +1,16 @@
 import { createHtmlResponse } from '../utils/htmlResponse.js';
 
+function isValidTimeZone(timeZone) {
+    if (typeof timeZone !== 'string' || timeZone === '') return false;
+
+    try {
+        new Intl.DateTimeFormat('en-US', { timeZone });
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 export async function handleCountdown(context) {
     const request = context.request || context;
     const url = new URL(request.url);
@@ -14,8 +25,19 @@ export async function handleCountdown(context) {
 
     const baseYear = 2025;
 
-    const userDefaultTz = request.cf?.timezone || 'Asia/Tokyo';
+    const userDefaultTz = isValidTimeZone(request.cf?.timezone)
+        ? request.cf.timezone
+        : 'Asia/Tokyo';
+
     const requestedTz = url.searchParams.get('tz');
+
+    // 不正なタイムゾーン (?tz=Bad/Zone など) で Worker が例外を出さないように取り除く
+    if (requestedTz !== null && !isValidTimeZone(requestedTz)) {
+        const cleanUrl = new URL(url);
+        cleanUrl.searchParams.delete('tz');
+        return Response.redirect(cleanUrl.toString(), 307);
+    }
+
     const tz = requestedTz || userDefaultTz;
 
     if (requestedTz === userDefaultTz) {
@@ -709,6 +731,17 @@ export async function handleCountdown(context) {
 <script>
     const isJa = ${isJa};
 
+    function isValidTz(z) {
+        if (!z) return false;
+
+        try {
+            new Intl.DateTimeFormat('en-US', { timeZone: z });
+            return true;
+        } catch(e) {
+            return false;
+        }
+    }
+
     const browserTz = (() => {
         try {
             return Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Tokyo';
@@ -717,8 +750,12 @@ export async function handleCountdown(context) {
         }
     })();
 
+    const defaultTz = isValidTz(browserTz) ? browserTz : 'UTC';
+
     const urlParams = new URLSearchParams(location.search);
-    const currentTz = urlParams.get('tz') || browserTz;
+    const requestedTz = urlParams.get('tz');
+
+    const currentTz = isValidTz(requestedTz) ? requestedTz : defaultTz;
 
     let lastYearNum = 0;
     let timeOffset = 0;
@@ -1381,7 +1418,7 @@ export async function handleCountdown(context) {
         .addEventListener('change', function() {
             const u = new URL(location.href);
 
-            if (this.value === browserTz) {
+            if (this.value === defaultTz) {
                 u.searchParams.delete('tz');
             } else {
                 u.searchParams.set('tz', this.value);
@@ -1416,41 +1453,108 @@ export async function handleCountdown(context) {
 
         const encTz = encodeURIComponent(currentTz || 'UTC');
 
+        function toNumber(value) {
+            if (typeof value === 'number') return value;
+
+            if (typeof value === 'string' && value.trim() !== '') {
+                return Number(value);
+            }
+
+            return NaN;
+        }
+
+        function parseWallClock(value) {
+            const m = String(value).trim().match(
+                /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})(?:\.(\d+))?$/
+            );
+
+            if (!m) return null;
+
+            return {
+                year: parseInt(m[1], 10),
+                month: parseInt(m[2], 10),
+                day: parseInt(m[3], 10),
+                hour: parseInt(m[4], 10),
+                minute: parseInt(m[5], 10),
+                second: parseInt(m[6], 10),
+                millisecond: m[7]
+                    ? Math.floor(Number('0.' + m[7]) * 1000)
+                    : 0
+            };
+        }
+
         function parseData(d) {
-            if (!d) return null;
+            if (!d || typeof d !== 'object') return null;
 
-            if (typeof d.unix_ms === 'number') {
-                return d.unix_ms;
+            // エポック値はタイムゾーンに依存しないので最優先
+            const unixMs = toNumber(d.unix_ms);
+
+            if (isFinite(unixMs)) {
+                return unixMs;
             }
 
-            if (typeof d.unixtime === 'number') {
-                return d.unixtime * 1000;
+            for (const key of ['unix_sec', 'unixtime', 'timestamp']) {
+                const v = toNumber(d[key]);
+
+                if (isFinite(v)) return v * 1000;
             }
 
-            if (typeof d.timestamp === 'number') {
-                return d.timestamp * 1000;
+            // 応答が持つタイムゾーン（無ければ要求したタイムゾーン）で解釈する
+            const responseTz = isValidTz(d.timeZone) ? d.timeZone : currentTz;
+
+            // オフセット付きの日時（例: worldtimeapi の utc_datetime）はそのまま解釈できる
+            if (typeof d.utc_datetime === 'string') {
+                const utcStr = d.utc_datetime.trim();
+
+                if (/(?:Z|[+-]\d{2}:?\d{2})$/i.test(utcStr)) {
+                    const ms = Date.parse(utcStr);
+
+                    if (!isNaN(ms)) return ms;
+                } else {
+                    const wall = parseWallClock(utcStr);
+
+                    if (wall) return wallClockToUtcMs(wall, 'UTC');
+                }
             }
 
-            if (d.utc_datetime) {
-                return Date.parse(d.utc_datetime);
+            // dateTime はオフセットを持たない「そのタイムゾーンの壁時計時刻」
+            // （ブラウザのローカル時刻として解釈すると時差の分だけズレる）
+            if (typeof d.dateTime === 'string') {
+                const wall = parseWallClock(d.dateTime);
+
+                if (wall) return wallClockToUtcMs(wall, responseTz);
             }
 
-            if (d.dateTime) {
-                return Date.parse(String(d.dateTime).trim());
+            // year/month/day ... 形式の壁時計時刻
+            const y = toNumber(d.year);
+            const mo = toNumber(d.month);
+            const da = toNumber(d.day);
+
+            if (isFinite(y) && isFinite(mo) && isFinite(da)) {
+                return wallClockToUtcMs({
+                    year: y,
+                    month: mo,
+                    day: da,
+                    hour: toNumber(d.hour) || 0,
+                    minute: toNumber(d.minute) || toNumber(d.minutes) || 0,
+                    second: toNumber(d.seconds) || toNumber(d.second) || 0,
+                    millisecond:
+                        toNumber(d.milliSeconds) || toNumber(d.milliseconds) || 0
+                }, responseTz);
             }
 
             return null;
         }
 
         const hamuzonEndpoints = [
-            'https://api-time.hamuzon-jp.f5.si/api/?timeZone=' + encTz,
             'https://api-time.hamuzon-jp.f5.si/api/time',
+            'https://api-time.hamuzon-jp.f5.si/api/?timeZone=' + encTz,
             'https://api-time.hamuzon-jp.f5.si/'
         ];
 
         const hamusataEndpoints = [
-            'https://api-time.hamusata.f5.si/api/?timeZone=' + encTz,
             'https://api-time.hamusata.f5.si/api/time',
+            'https://api-time.hamusata.f5.si/api/?timeZone=' + encTz,
             'https://api-time.hamusata.f5.si/'
         ];
 
@@ -1497,19 +1601,29 @@ export async function handleCountdown(context) {
         return new Date(Date.now() + timeOffset);
     }
 
-    const tzFormatter = new Intl.DateTimeFormat('en-CA', {
-        timeZone: currentTz,
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hourCycle: 'h23'
-    });
+    const tzFormatters = new Map();
 
-    function getTzParts(date) {
-        const parts = tzFormatter.formatToParts(date);
+    function getTzParts(date, tzName) {
+        const zone = tzName || currentTz;
+
+        let formatter = tzFormatters.get(zone);
+
+        if (!formatter) {
+            formatter = new Intl.DateTimeFormat('en-CA', {
+                timeZone: zone,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hourCycle: 'h23'
+            });
+
+            tzFormatters.set(zone, formatter);
+        }
+
+        const parts = formatter.formatToParts(date);
 
         const g = type => {
             const item = parts.find(p => p.type === type);
@@ -1526,10 +1640,21 @@ export async function handleCountdown(context) {
         };
     }
 
-    function getNewYearUtcMs(year) {
-        const guessUtc = Date.UTC(year, 0, 1, 0, 0, 0);
+    // 指定タイムゾーンの壁時計時刻を UTC エポックミリ秒へ変換する
+    function wallClockToUtcMs(wall, tzName) {
+        const ms = wall.millisecond || 0;
 
-        const p = getTzParts(new Date(guessUtc));
+        const guessUtc = Date.UTC(
+            wall.year,
+            wall.month - 1,
+            wall.day,
+            wall.hour,
+            wall.minute,
+            wall.second,
+            ms
+        );
+
+        const p = getTzParts(new Date(guessUtc), tzName);
 
         const localAsUtc = Date.UTC(
             p.year,
@@ -1537,12 +1662,25 @@ export async function handleCountdown(context) {
             p.day,
             p.hour,
             p.minute,
-            p.second
+            p.second,
+            ms
         );
 
         const offsetMs = localAsUtc - guessUtc;
 
         return guessUtc - offsetMs;
+    }
+
+    function getNewYearUtcMs(year) {
+        return wallClockToUtcMs({
+            year,
+            month: 1,
+            day: 1,
+            hour: 0,
+            minute: 0,
+            second: 0,
+            millisecond: 0
+        }, currentTz);
     }
 
     function updateCountdown() {
