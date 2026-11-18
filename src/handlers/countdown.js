@@ -180,20 +180,18 @@ export async function handleCountdown(context) {
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
         z-index: 10;
-        display: flex;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
         align-items: center;
-        justify-content: space-between;
         gap: .5rem;
         min-height: 3.2rem;
     }
 
     #page_title {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+        grid-column: 2;
+        justify-self: center;
         width: max-content;
-        max-width: calc(100% - 24rem);
+        min-width: 0;
         font-size: clamp(1rem, 3.5vw, 2.2rem);
         font-weight: 600;
         text-align: center;
@@ -300,6 +298,8 @@ export async function handleCountdown(context) {
     }
 
     .headerControls {
+        grid-column: 3;
+        justify-self: end;
         display: inline-flex;
         align-items: center;
         gap: .4rem;
@@ -480,7 +480,7 @@ export async function handleCountdown(context) {
     @media (max-width: 700px) {
         header {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
             grid-template-rows: auto auto;
             align-items: center;
             gap: .25rem .5rem;
@@ -488,12 +488,11 @@ export async function handleCountdown(context) {
         }
 
         #page_title {
-            grid-column: 1;
+            grid-column: 2;
             grid-row: 1;
             position: static;
             transform: none;
-            width: auto;
-            max-width: none;
+            max-width: calc(100vw - 5rem);
         }
 
         .headerControls {
@@ -507,7 +506,7 @@ export async function handleCountdown(context) {
         }
 
         #tzSettingsBtn {
-            grid-column: 2;
+            grid-column: 3;
             grid-row: 1;
             justify-self: end;
         }

@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/hamuzon/hamusata-f5-si-Workers/issues"
   },
-  "homepage": "https://github.com/hamuzon/hamusata-f5-si-Workers#readme"
+  "homepage": "https://github.com/hamuzon/hamusata-f5-si-Workers#readme",
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "workerd@1.20260811.1": true
+  }
 }
